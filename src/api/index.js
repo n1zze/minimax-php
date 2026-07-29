@@ -8,11 +8,21 @@ class ApiError extends Error {
 }
 
 /**
- * WithToken is a no-op — tokens are sent via Authorization header only.
- * Kept for API compatibility; returns the URL unchanged.
+ * Append the auth token to a server file URL so <img>, <a href> and direct
+ * navigation can pass the token (browsers can't set Authorization header
+ * for these). Skips data:, blob:, and external URLs.
  */
 function withAuthToken(url) {
-  return url
+  if (!url || typeof url !== 'string') return url
+  if (url.startsWith('data:') || url.startsWith('blob:')) return url
+  // Only attach to our own /api/files/ paths
+  if (!url.includes('/api/files/')) return url
+  const token = localStorage.getItem('mimimax_token')
+  if (!token) return url
+  // Don't re-tokenize
+  if (url.includes('t=')) return url
+  const sep = url.includes('?') ? '&' : '?'
+  return `${url}${sep}t=${encodeURIComponent(token)}`
 }
 
 async function request(endpoint, options = {}) {

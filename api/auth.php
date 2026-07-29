@@ -18,10 +18,16 @@ function authenticate(): ?array
 {
     $token = null;
 
-    // Authorization header only — tokens must not be in URLs
+    // Authorization header first
     $auth = $_SERVER['HTTP_AUTHORIZATION'] ?? '';
     if (str_starts_with($auth, 'Bearer ')) {
         $token = substr($auth, 7);
+    }
+
+    // Fallback: ?t= query parameter (needed for <img src>, <a href> —
+    // browsers can't set Authorization header on these)
+    if (!$token && isset($_GET['t'])) {
+        $token = $_GET['t'];
     }
 
     if (!$token) return null;
