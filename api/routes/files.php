@@ -195,6 +195,16 @@ function route_serve_file(string $name): void
         json_error(404, 'Файл не найден');
     }
 
+    // Verify file belongs to a project the user can access
+    $fileId = pathinfo($safeName, PATHINFO_FILENAME);
+    $db = get_db();
+    $stmt = $db->prepare('SELECT project_id FROM project_files WHERE id = ?');
+    $stmt->execute([$fileId]);
+    $fileRow = $stmt->fetch();
+    if ($fileRow) {
+        require_project_access($user, $fileRow['project_id']);
+    }
+
     // Set Content-Type
     $ext = strtolower(pathinfo($safeName, PATHINFO_EXTENSION));
     $contentTypes = [

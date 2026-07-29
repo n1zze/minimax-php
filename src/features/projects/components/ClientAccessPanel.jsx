@@ -1,5 +1,4 @@
 import { useMemo, useState } from 'react'
-import bcrypt from 'bcryptjs'
 import { Check, Copy, KeyRound, Link as LinkIcon, RefreshCw, Eye, UserPlus } from 'lucide-react'
 import { api } from '../../../api'
 import styles from './ClientAccessPanel.module.css'
@@ -81,8 +80,8 @@ export function ClientAccessPanel({ projectId, onVisualizerAccess }) {
     setStatus('')
 
     try {
-      const passwordHash = bcrypt.hashSync(pwdToSave, 10)
-      await api.updateProject(projectId, { passwordHash })
+      // Send plain password — server hashes it with bcrypt
+      await api.updateProject(projectId, { passwordHash: pwdToSave })
       setGeneratedPassword(pwdToSave)
       setStatus('Пароль клиента сохранён')
     } catch (err) {

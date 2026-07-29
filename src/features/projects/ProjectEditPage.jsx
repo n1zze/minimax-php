@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useProjectStore } from '../../store/useProjectStore'
 import { dbGetProject, dbGetFile, dbSaveFile, dbDeleteProject } from '../../db'
@@ -100,6 +100,7 @@ export default function ProjectEditPage() {
   const navigate = useNavigate()
   const { saveProject, setEditMode } = useProjectStore()
   const [local, setLocal] = useState(null)
+  const [loadingError, setLoadingError] = useState(null)
   const [saving, setSaving] = useState(false)
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
   const [deleting, setDeleting] = useState(false)
@@ -282,7 +283,7 @@ export default function ProjectEditPage() {
           setLocal(p)
         }
       } catch (err) {
-        console.error('Error loading project:', err)
+        if (!cancelled) setLoadingError(err.message || 'Ошибка загрузки')
       }
     }
     
@@ -290,7 +291,8 @@ export default function ProjectEditPage() {
     return () => { cancelled = true }
   }, [id])
 
-  if (!local) return null
+  if (loadingError) return <div style={{ padding: 40, textAlign: 'center' }}>Ошибка: {loadingError}</div>
+  if (!local) return <div style={{ padding: 40, textAlign: 'center' }}>Загрузка...</div>
 
   const s = local.sections
 

@@ -59,20 +59,8 @@ function cors_headers(): void
     if ($origin) {
         header("Access-Control-Allow-Origin: $origin");
         header('Access-Control-Allow-Credentials: true');
-    } else {
-        // No explicit origin — reflect request origin (development only)
-        // WARNING: In production, always set CORS_ORIGIN to your domain
-        $reqOrigin = $_SERVER['HTTP_ORIGIN'] ?? '';
-        if ($reqOrigin) {
-            // Basic validation: must be http(s)
-            if (preg_match('#^https?://#', $reqOrigin)) {
-                header("Access-Control-Allow-Origin: $reqOrigin");
-                header('Access-Control-Allow-Credentials: true');
-            }
-        } else {
-            header('Access-Control-Allow-Origin: *');
-        }
     }
+    // CORS_ORIGIN is required (enforced in config.php), so we never reflect origins.
     header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
     header('Access-Control-Allow-Headers: Content-Type, Authorization');
 
@@ -89,14 +77,13 @@ function security_headers(): void
     header('X-Content-Type-Options: nosniff');
     header('X-Frame-Options: DENY');
     header('Referrer-Policy: strict-origin-when-cross-origin');
-    header('X-XSS-Protection: 1; mode=block');
     // HSTS only over HTTPS (browsers ignore it on HTTP anyway)
     if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') {
         header('Strict-Transport-Security: max-age=31536000; includeSubDomains');
     }
     header('Permissions-Policy: camera=(), microphone=(), geolocation=()');
-    // Prevent MIME sniffing of uploaded files
     header('X-Download-Options: noopen');
+    header("Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'");
 }
 
 // ─── Rate Limiting (file-based) ────────────────────────────────────────────

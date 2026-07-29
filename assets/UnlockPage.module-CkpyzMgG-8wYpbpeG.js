@@ -1,1 +1,0 @@
-var e={page:`_page_7l5m4_1`,form:`_form_7l5m4_15`,iconWrap:`_iconWrap_7l5m4_41`,title:`_title_7l5m4_65`,subtitle:`_subtitle_7l5m4_75`,hint:`_hint_7l5m4_87`,input:`_input_7l5m4_109`,error:`_error_7l5m4_137`,submitBtn:`_submitBtn_7l5m4_147`};export{e as t};

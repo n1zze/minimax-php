@@ -11,7 +11,29 @@ require_once __DIR__ . '/../api/helpers.php';
 require_once __DIR__ . '/../api/bootstrap.php';
 require_once __DIR__ . '/../api/auth.php';
 
-session_start();
+session_start([
+    'cookie_secure' => !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off',
+    'cookie_httponly' => true,
+    'cookie_samesite' => 'Lax',
+]);
+
+// CSRF token generation and validation
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
+function csrf_field(): string {
+    return '<input type="hidden" name="csrf_token" value="' . htmlspecialchars($_SESSION['csrf_token']) . '">';
+}
+
+function verify_csrf(): void {
+    $token = $_POST['csrf_token'] ?? '';
+    if (!$token || !hash_equals($_SESSION['csrf_token'] ?? '', $token)) {
+        http_response_code(403);
+        echo 'CSRF token mismatch';
+        exit;
+    }
+}
 
 // ─── Авторизация ───────────────────────────────────────────────────────────
 
@@ -58,9 +80,12 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
 
 // Вход
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login_email'])) {
+    verify_csrf();
     $email = $_POST['login_email'] ?? '';
     $password = $_POST['login_password'] ?? '';
     if (admin_login($email, $password)) {
+        // Regenerate session ID after login to prevent session fixation
+        session_regenerate_id(true);
         header('Location: index.php');
         exit;
     }
@@ -69,10 +94,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login_email'])) {
 
 // Сброс пароля проекта
 if (isset($_POST['reset_password']) && $adminUser = admin_check_auth()) {
+    verify_csrf();
     $db = get_db();
     $projectId = $_POST['project_id'] ?? '';
     $newPassword = $_POST['new_password'] ?? '';
-    if ($projectId && $newPassword) {
+    if ($projectId && strlen($newPassword) >= 6) {
         $hash = password_hash($newPassword, PASSWORD_BCRYPT);
         $stmt = $db->prepare('UPDATE projects SET password_hash = ? WHERE id = ?');
         $stmt->execute([$hash, $projectId]);
@@ -82,6 +108,7 @@ if (isset($_POST['reset_password']) && $adminUser = admin_check_auth()) {
 
 // Сброс токена визуализатора
 if (isset($_POST['reset_viz_token']) && $adminUser = admin_check_auth()) {
+    verify_csrf();
     $db = get_db();
     $projectId = $_POST['project_id'] ?? '';
     $newToken = $_POST['new_viz_token'] ?? '';
@@ -95,6 +122,7 @@ if (isset($_POST['reset_viz_token']) && $adminUser = admin_check_auth()) {
 
 // Удаление проекта
 if (isset($_POST['delete_project']) && $adminUser = admin_check_auth()) {
+    verify_csrf();
     $db = get_db();
     $projectId = $_POST['project_id'] ?? '';
     if ($projectId) {
@@ -207,6 +235,7 @@ if ($db) {
             <div class="alert alert-error"><?= htmlspecialchars($loginError) ?></div>
         <?php endif; ?>
         <form method="POST">
+            <?= csrf_field() ?>
             <div class="form-row">
                 <label>Email</label>
                 <input type="email" name="login_email" required autofocus>
@@ -275,7 +304,7 @@ if ($db) {
                 <tr>
                     <td><strong><?= htmlspecialchars($proj['title']) ?></strong></td>
                     <td><?= htmlspecialchars($proj['client_name']) ?></td>
-                    <td><span class="badge badge-<?= $proj['status'] ?>"><?= $proj['status'] ?></span></td>
+                    <td><span class="badge badge-<?= htmlspecialchars($proj['status']) ?>"><?= htmlspecialchars($proj['status']) ?></span></td>
                     <td><span class="badge badge-<?= $proj['has_password'] ? 'yes' : 'no' ?>"><?= $proj['has_password'] ? 'есть' : 'нет' ?></span></td>
                     <td><span class="badge badge-<?= $proj['has_viz'] ? 'yes' : 'no' ?>"><?= $proj['has_viz'] ? 'есть' : 'нет' ?></span></td>
                     <td style="font-size:12px; color:#888;"><?= substr($proj['created_at'], 0, 10) ?></td>
@@ -298,10 +327,11 @@ if ($db) {
                 <h3>Сбросить пароль клиента</h3>
                 <p style="font-size:14px; color:#666; margin-bottom:12px;"><?= htmlspecialchars($proj['title']) ?></p>
                 <form method="POST">
+                    <?= csrf_field() ?>
                     <input type="hidden" name="project_id" value="<?= $proj['id'] ?>">
                     <div class="form-row">
                         <label>Новый пароль</label>
-                        <input type="text" name="new_password" required placeholder="Минимум 6 символов">
+                        <input type="password" name="new_password" required placeholder="Минимум 6 символов" minlength="6">
                     </div>
                     <div class="modal-actions">
                         <button type="button" class="btn btn-outline" onclick="closeModal('modal-pwd-<?= $proj['id'] ?>')">Отмена</button>
@@ -317,6 +347,7 @@ if ($db) {
                 <h3>Сбросить токен визуализатора</h3>
                 <p style="font-size:14px; color:#666; margin-bottom:12px;"><?= htmlspecialchars($proj['title']) ?></p>
                 <form method="POST">
+                    <?= csrf_field() ?>
                     <input type="hidden" name="project_id" value="<?= $proj['id'] ?>">
                     <div class="form-row">
                         <label>Новый токен</label>
@@ -336,6 +367,7 @@ if ($db) {
                 <h3>Удалить проект?</h3>
                 <p style="font-size:14px; color:#666; margin-bottom:12px;">«<?= htmlspecialchars($proj['title']) ?>» — это действие нельзя отменить.</p>
                 <form method="POST">
+                    <?= csrf_field() ?>
                     <input type="hidden" name="project_id" value="<?= $proj['id'] ?>">
                     <div class="modal-actions">
                         <button type="button" class="btn btn-outline" onclick="closeModal('modal-del-<?= $proj['id'] ?>')">Отмена</button>
@@ -357,7 +389,7 @@ if ($db) {
             <?php foreach ($users as $user): ?>
                 <tr>
                     <td><?= htmlspecialchars($user['email']) ?></td>
-                    <td><span class="badge badge-<?= $user['role'] === 'designer' ? 'in_progress' : 'draft' ?>"><?= $user['role'] ?></span></td>
+                    <td><span class="badge badge-<?= $user['role'] === 'designer' ? 'in_progress' : 'draft' ?>"><?= htmlspecialchars($user['role']) ?></span></td>
                     <td style="font-size:12px; color:#888;"><?= substr($user['created_at'], 0, 10) ?></td>
                 </tr>
             <?php endforeach; ?>

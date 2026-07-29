@@ -23,18 +23,18 @@ export function Lightbox({ images = [], currentIndex = 0, onClose, onPrev, onNex
   const image = images[currentIndex]
 
   return (
-    <div className={styles.overlay} onClick={onClose}>
+    <div className={styles.overlay} onClick={onClose} role="dialog" aria-modal="true" aria-label="Просмотр изображения">
       <div className={styles.dialog} onClick={(e) => e.stopPropagation()}>
-        <button className={styles.closeBtn} onClick={onClose}>
+        <button className={styles.closeBtn} onClick={onClose} aria-label="Закрыть">
           <X size={20} />
         </button>
         {currentIndex > 0 && (
-          <button className={`${styles.navBtn} ${styles.prev}`} onClick={onPrev}>
+          <button className={`${styles.navBtn} ${styles.prev}`} onClick={onPrev} aria-label="Предыдущее изображение">
             <ChevronLeft size={24} />
           </button>
         )}
         {currentIndex < images.length - 1 && (
-          <button className={`${styles.navBtn} ${styles.next}`} onClick={onNext}>
+          <button className={`${styles.navBtn} ${styles.next}`} onClick={onNext} aria-label="Следующее изображение">
             <ChevronRight size={24} />
           </button>
         )}

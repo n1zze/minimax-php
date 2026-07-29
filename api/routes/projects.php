@@ -51,6 +51,10 @@ function sanitize_project(array $project, string $role): array
         'objectType' => $project['objectType'],
     ];
 
+    // Never expose sensitive fields
+    unset($safe['passwordHash']);
+    unset($safe['visualizerToken']);
+
     if ($role === ROLE_VISUALIZER) {
         $safe['data'] = [
             'floorPlan' => $project['data']['floorPlan'] ?? ['images' => [], 'videoUrl' => '', 'videoTitle' => ''],
@@ -376,13 +380,27 @@ function route_update_project(string $id): void
             json_error(403, 'Визуализатор может изменять только визуализации проекта');
         }
 
+        // Visualizer can ONLY modify visualizations — strip any other fields
+        $allowedInput = ['sections' => ['visualizations' => $input['sections']['visualizations']]];
+
         $updatedData = array_merge($existingData, [
-            'visualizations' => sections_to_flat_data(['visualizations' => $input['sections']['visualizations']])['visualizations'],
+            'visualizations' => sections_to_flat_data(['visualizations' => $allowedInput['sections']['visualizations']])['visualizations'],
         ]);
 
         $sets[] = 'data = ?';
         $values[] = json_encode($updatedData, JSON_UNESCAPED_UNICODE);
     } else {
+        // Validate status
+        if (isset($input['status'])) {
+            $allowedStatuses = ['draft', 'in_progress', 'completed'];
+            if (!in_array($input['status'], $allowedStatuses, true)) {
+                json_error(400, 'Недопустимый статус. Допустимые: ' . implode(', ', $allowedStatuses));
+            }
+        }
+        // Validate title length
+        if (isset($input['title']) && strlen($input['title']) > 500) {
+            json_error(400, 'Название проекта слишком длинное (макс. 500 символов)');
+        }
         // Designer can update everything
         $fields = [
             'title' => 'title',

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import { useProjectStore } from '../../../store/useProjectStore'
 import { useAuthStore, ROLE_DESIGNER, ROLE_VISUALIZER } from '../../../store/useAuthStore'
@@ -32,8 +32,14 @@ export default function ProjectPage() {
   const isDesigner = user?.role === ROLE_DESIGNER
   const isVisualizer = user?.role === ROLE_VISUALIZER
 
+  const loadIdRef = useRef(null)
+
   useEffect(() => {
-    loadProject(id)
+    loadIdRef.current = id
+    loadProject(id).then(() => {
+      // If id changed while loading, discard stale result
+      if (loadIdRef.current !== id) return
+    })
   }, [id, loadProject])
 
   /**
@@ -62,6 +68,8 @@ export default function ProjectPage() {
     saveProject(updatedProject)
   }
 
+  const { error } = useProjectStore()
+  if (error) return <div className={styles.loader}>Ошибка: {error}</div>
   if (!project) return <div className={styles.loader}>Загрузка...</div>
 
   const s = project.sections

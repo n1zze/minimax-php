@@ -1,9 +1,14 @@
-import bcrypt from 'bcryptjs'
+import { api } from '../api'
 
 /**
- * Verify a plain-text password against a bcrypt hash.
- * Works synchronously (suitable for client-side demo).
+ * Verify password against the server (never client-side bcrypt).
+ * Falls back to unlock attempt — if it succeeds, the password is correct.
  */
-export function verifyPassword(password, hash) {
-  return bcrypt.compareSync(password, hash)
+export async function verifyPassword(projectId, password) {
+  try {
+    const result = await api.unlock(projectId, password)
+    return !!result?.token
+  } catch {
+    return false
+  }
 }

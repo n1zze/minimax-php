@@ -14,7 +14,7 @@
  */
 
 // ─── Security ──────────────────────────────────────────────────────────────
-define('JWT_SECRET', 'CHANGE_ME_generate_with_opensql_rand_base64_32');
+define('JWT_SECRET', 'CHANGE_ME_generate_with_openssl_rand_base64_32');
 define('JWT_EXPIRES_IN', 7 * 24 * 3600); // 7 days in seconds
 
 // ─── Admin account (created on first run) ──────────────────────────────────

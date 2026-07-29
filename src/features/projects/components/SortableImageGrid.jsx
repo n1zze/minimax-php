@@ -61,7 +61,7 @@ export function SortableImageGrid({ items = [], onReorder, onRemove, badgeFor })
 
         return (
           <div
-            key={item.id || index}
+            key={item.id || `grid-${index}-${item.src?.slice(-20) || ''}`}
             className={`${styles.cell} ${isDragging ? styles.cellDragging : ''} ${isOver ? styles.cellOver : ''}`}
             draggable
             onDragStart={(e) => handleDragStart(e, index)}

@@ -1,6 +1,21 @@
 import { create } from 'zustand'
 import { api, withAuthToken } from '../api'
 
+// Track blob URLs for cleanup
+const blobUrlRegistry = new Set()
+
+function trackBlobUrl(url) {
+  if (url && url.startsWith('blob:')) blobUrlRegistry.add(url)
+  return url
+}
+
+function revokeAllBlobUrls() {
+  for (const url of blobUrlRegistry) {
+    URL.revokeObjectURL(url)
+  }
+  blobUrlRegistry.clear()
+}
+
 /**
  * Walk through project sections and append auth token to /api/files/* URLs.
  * Idempotent — safe to call multiple times (won't double-add tokens).
@@ -216,9 +231,8 @@ function base64ToBlobUrl(base64) {
       ia[i] = byteString.charCodeAt(i)
     }
     const blob = new Blob([ab], { type: mimeString })
-    return URL.createObjectURL(blob)
+    return trackBlobUrl(URL.createObjectURL(blob))
   } catch (e) {
-    console.warn('Failed to convert base64 to blob URL:', e)
     return null
   }
 }
@@ -240,14 +254,14 @@ async function regenerateImageUrls(project) {
           try {
             const file = await dbGetFile(img.id)
             if (file?.blob) {
-              img.src = URL.createObjectURL(file.blob)
+              img.src = trackBlobUrl(URL.createObjectURL(file.blob))
             } else if (file?.data) {
               img.src = base64ToBlobUrl(file.data)
             } else if (img.base64) {
               img.src = base64ToBlobUrl(img.base64)
             }
           } catch (e) {
-            console.warn('Failed to regenerate image URL:', e)
+            // silent
           }
         }
       }
@@ -259,14 +273,14 @@ async function regenerateImageUrls(project) {
           try {
             const file = await dbGetFile(item.id)
             if (file?.blob) {
-              item.src = URL.createObjectURL(file.blob)
+              item.src = trackBlobUrl(URL.createObjectURL(file.blob))
             } else if (file?.data) {
               item.src = base64ToBlobUrl(file.data)
             } else if (item.base64) {
               item.src = base64ToBlobUrl(item.base64)
             }
           } catch (e) {
-            console.warn('Failed to regenerate item URL:', e)
+            // silent
           }
         }
       }
@@ -280,14 +294,14 @@ async function regenerateImageUrls(project) {
               try {
                 const file = await dbGetFile(img.id)
                 if (file?.blob) {
-                  img.src = URL.createObjectURL(file.blob)
+                  img.src = trackBlobUrl(URL.createObjectURL(file.blob))
                 } else if (file?.data) {
                   img.src = base64ToBlobUrl(file.data)
                 } else if (img.base64) {
                   img.src = base64ToBlobUrl(img.base64)
                 }
               } catch (e) {
-                console.warn('Failed to regenerate tab image URL:', e)
+                // silent
               }
             }
           }
@@ -425,7 +439,10 @@ function normAuthorSupervision(val) {
   }
 }
 
-export const useProjectStore = create((set) => ({
+let loadProjectSeq = 0
+let loadProjectsListSeq = 0
+
+export const useProjectStore = create((set, get) => ({
   project: null,
   isUnlocked: false,
   isEditMode: false,
@@ -443,10 +460,12 @@ export const useProjectStore = create((set) => ({
 
   /** Load all projects from API */
   loadProjectsList: async () => {
+    const seq = ++loadProjectsListSeq
     set({ loading: true })
     try {
       // First try to fetch from API
       const apiProjects = await api.getProjects()
+      if (seq !== loadProjectsListSeq) return get().projectsList
       if (apiProjects && apiProjects.length > 0) {
         // Tokenize thumbnail URLs for image rendering
         const tokenized = apiProjects.map((p) => {
@@ -463,7 +482,7 @@ export const useProjectStore = create((set) => ({
             await dbSaveProject(proj)
           }
         } catch (dbErr) {
-          console.warn('Failed to sync to IndexedDB:', dbErr)
+          // silent
         }
         set({ projectsList: tokenized, loading: false })
         return tokenized
@@ -484,7 +503,6 @@ export const useProjectStore = create((set) => ({
       set({ projectsList: mockProjects, loading: false })
       return mockProjects
     } catch (err) {
-      console.error('Load projects list error:', err)
       // Fallback to IndexedDB
       try {
         const { dbGetAllProjects } = await import('../db')
@@ -494,7 +512,7 @@ export const useProjectStore = create((set) => ({
           return dbProjects
         }
       } catch (dbErr) {
-        console.error('Local data error:', dbErr)
+        // silent
       }
       set({ loading: false })
       return []
@@ -503,22 +521,24 @@ export const useProjectStore = create((set) => ({
 
   /** Load a single project from API (normalized) */
   loadProject: async (id) => {
-    set({ loading: true })
+    const seq = ++loadProjectSeq
+    set({ loading: true, error: null })
     try {
       // Try API first
       const raw = await api.getProject(id)
+      if (seq !== loadProjectSeq) return null
       if (raw) {
+        // Revoke old blob URLs before loading new ones
+        revokeAllBlobUrls()
         let project = normalizeProject(raw)
-        // Append auth token to server URLs for <img> / <a> rendering
         project = applyAuthTokens(project)
-        // Regenerate blob URLs for images
         project = await regenerateImageUrls(project)
-        // Save to IndexedDB for offline access
+        if (seq !== loadProjectSeq) return null
         try {
           const { dbSaveProject } = await import('../db')
           await dbSaveProject(project)
         } catch (dbErr) {
-          console.warn('Failed to save to IndexedDB:', dbErr)
+          // silent
         }
         set({ project, loading: false })
         return project
@@ -526,22 +546,23 @@ export const useProjectStore = create((set) => ({
       set({ loading: false })
       return null
     } catch (err) {
-      console.error('Load project error:', err)
-      // Fallback to IndexedDB
+      if (seq !== loadProjectSeq) return null
       try {
         const { dbGetProject } = await import('../db')
         let raw = await dbGetProject(id)
         if (raw) {
+          revokeAllBlobUrls()
           let project = normalizeProject(raw)
           project = applyAuthTokens(project)
           project = await regenerateImageUrls(project)
+          if (seq !== loadProjectSeq) return null
           set({ project, loading: false })
           return project
         }
       } catch (dbErr) {
-        console.error('Local data error:', dbErr)
+        // silent
       }
-      set({ loading: false })
+      set({ loading: false, error: err.message || 'Ошибка загрузки проекта' })
       return null
     }
   },
@@ -555,45 +576,23 @@ export const useProjectStore = create((set) => ({
       // Clean up blob URLs before saving (they won't work after reload)
       const cleanedProject = cleanupProjectForSave(projectToSave)
       
-      console.log('[saveProject] Cleaning sections:')
-      for (const [key, section] of Object.entries(cleanedProject.sections)) {
-        if (section?.items?.length > 0) {
-          console.log(`  ${key}.items: ${section.items.length} items`)
-        }
-        if (section?.images?.length > 0) {
-          console.log(`  ${key}.images: ${section.images.length} images`)
-        }
-        if (section?.tabs) {
-          for (const tab of section.tabs) {
-            if (tab?.images?.length > 0) {
-              console.log(`  ${key}.tabs[${tab.id}].images: ${tab.images.length} images`)
-            }
-          }
-        }
-      }
-      
       // Try to save to API first
       try {
-        const result = await api.updateProject(cleanedProject.id, cleanedProject)
-        console.log('[saveProject] API save success:', result)
+        await api.updateProject(cleanedProject.id, cleanedProject)
       } catch (apiErr) {
-        console.warn('[saveProject] API save failed, saving locally:', apiErr.message)
+        // API save failed, will save locally
       }
       
       // Always save to IndexedDB for offline access
       try {
         const { dbSaveProject } = await import('../db')
         await dbSaveProject(cleanedProject)
-        console.log('[saveProject] Saved to IndexedDB')
       } catch (dbErr) {
-        console.error('[saveProject] Failed to save locally:', dbErr)
         throw dbErr
       }
       
       set({ project: cleanedProject })
-      console.log('[saveProject] Done, updated Zustand store')
     } catch (err) {
-      console.error('[saveProject] Error:', err)
       set({ error: err.message })
       throw err
     }

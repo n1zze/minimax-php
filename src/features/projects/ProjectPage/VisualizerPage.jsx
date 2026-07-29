@@ -27,7 +27,10 @@ export default function VisualizerPage() {
   const [lightboxIndex, setLightboxIndex] = useState(-1)
   const saveStatusTimer = useRef(null)
 
+  const loadIdRef = useRef(null)
+
   useEffect(() => {
+    loadIdRef.current = id
     loadProject(id)
   }, [id, loadProject])
 
@@ -41,6 +44,8 @@ export default function VisualizerPage() {
       if (saveStatusTimer.current) clearTimeout(saveStatusTimer.current)
     }
   }, [saveStatus])
+
+  const { error } = useProjectStore()
 
   const existingTabs = project?.sections?.visualizations?.tabs || []
 
@@ -167,6 +172,7 @@ export default function VisualizerPage() {
     )
   }
 
+  if (error) return <div className={styles.loader}>Ошибка: {error}</div>
   if (!project) return <div className={styles.loader}>Загрузка...</div>
 
   const s = project?.sections || {}
