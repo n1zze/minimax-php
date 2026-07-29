@@ -9,30 +9,35 @@
 }
 
 .projectHeader {
-  padding: var(--space-3xl) 0 var(--space-xl);
-  border-bottom: 1px solid var(--color-border-light);
+  padding: var(--space-section) 0 var(--space-xl);
+  border-bottom: 1px solid var(--color-hairline-soft);
 }
 
 .backLink {
   display: inline-block;
   font-size: var(--font-size-sm);
-  color: var(--color-text-secondary);
+  color: var(--color-muted);
   margin-bottom: var(--space-md);
   transition: color var(--transition-fast);
 }
 
 .backLink:hover {
-  color: var(--color-text);
+  color: var(--color-primary);
+  text-decoration: none;
 }
 
 .projectTitle {
-  font-size: var(--font-size-3xl);
+  font-family: var(--font-family-display);
+  font-size: var(--font-size-4xl);
+  font-weight: var(--font-weight-normal);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--color-ink);
   margin-bottom: var(--space-sm);
 }
 
 .projectMeta {
   font-size: var(--font-size-sm);
-  color: var(--color-text-secondary);
+  color: var(--color-muted);
   margin-bottom: var(--space-lg);
 }
 
@@ -49,37 +54,40 @@
 .editBtn {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-sm);
-  padding: var(--space-sm) var(--space-lg);
-  border: 1px solid var(--color-border);
+  gap: var(--space-xs);
+  padding: 10px 20px;
+  border: 1px solid var(--color-hairline);
   border-radius: var(--radius-md);
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
-  color: var(--color-text-secondary);
+  color: var(--color-ink);
+  background: var(--color-canvas);
   transition: all var(--transition-fast);
+  height: 40px;
 }
 
 .editBtn:hover {
-  border-color: var(--color-accent);
-  color: var(--color-accent);
+  border-color: var(--color-ink);
 }
 
 .exportBtn {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-sm);
-  padding: var(--space-sm) var(--space-lg);
-  border: 1px solid var(--color-border);
+  gap: var(--space-xs);
+  padding: 10px 20px;
+  border: 1px solid var(--color-hairline);
   border-radius: var(--radius-md);
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
-  color: var(--color-text-secondary);
+  color: var(--color-muted);
+  background: var(--color-canvas);
   transition: all var(--transition-fast);
+  height: 40px;
 }
 
 .exportBtn:hover {
-  border-color: var(--color-accent);
-  color: var(--color-accent);
+  border-color: var(--color-ink);
+  color: var(--color-ink);
 }
 
 .loader {
@@ -87,10 +95,10 @@
   align-items: center;
   justify-content: center;
   min-height: 50vh;
-  color: var(--color-text-secondary);
+  color: var(--color-muted);
+  font-size: var(--font-size-sm);
 }
 
-/* ── Mobile adaptation ──────────────────────────────────────────── */
 @media (max-width: 640px) {
   .projectHeader {
     padding: var(--space-xl) 0 var(--space-lg);

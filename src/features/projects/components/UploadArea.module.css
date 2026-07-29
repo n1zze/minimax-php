@@ -11,16 +11,16 @@
   justify-content: center;
   gap: var(--space-sm);
   padding: var(--space-2xl);
-  border: 2px dashed var(--color-border);
+  border: 2px dashed var(--color-hairline);
   border-radius: var(--radius-lg);
   cursor: pointer;
   transition: all var(--transition-fast);
-  background: var(--color-bg);
+  background: var(--color-canvas);
 }
 
 .area:hover {
-  border-color: var(--color-accent);
-  background: var(--color-bg-secondary);
+  border-color: var(--color-primary);
+  background: var(--color-surface-soft);
 }
 
 .input {
@@ -28,15 +28,15 @@
 }
 
 .icon {
-  color: var(--color-text-light);
+  color: var(--color-muted-soft);
 }
 
 .label {
   font-weight: var(--font-weight-medium);
-  color: var(--color-text-secondary);
+  color: var(--color-muted);
 }
 
 .hint {
   font-size: var(--font-size-xs);
-  color: var(--color-text-light);
+  color: var(--color-muted-soft);
 }

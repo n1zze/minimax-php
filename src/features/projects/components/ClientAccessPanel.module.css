@@ -1,7 +1,8 @@
 .panel {
   padding: var(--space-xl);
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--color-hairline);
   border-radius: var(--radius-lg);
+  background: var(--color-canvas);
 }
 
 .header {
@@ -12,18 +13,21 @@
 }
 
 .title {
-  font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-semibold);
+  font-family: var(--font-family-display);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-normal);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--color-ink);
 }
 
 .subtitle {
   font-size: var(--font-size-sm);
-  color: var(--color-text-secondary);
-  margin-top: var(--space-xs);
+  color: var(--color-muted);
+  margin-top: var(--space-xxs);
 }
 
 .icon {
-  color: var(--color-text-secondary);
+  color: var(--color-muted);
 }
 
 .linkRow {
@@ -31,17 +35,18 @@
   align-items: center;
   gap: var(--space-sm);
   margin-bottom: var(--space-lg);
-  color: var(--color-text-secondary);
+  color: var(--color-muted);
 }
 
 .linkInput {
   flex: 1;
-  padding: var(--space-sm) var(--space-md);
-  border: 1px solid var(--color-border);
+  padding: var(--space-xs) var(--space-md);
+  border: 1px solid var(--color-hairline);
   border-radius: var(--radius-md);
   font-size: var(--font-size-sm);
-  background: var(--color-bg-secondary);
-  color: var(--color-text);
+  background: var(--color-surface-soft);
+  color: var(--color-ink);
+  font-family: var(--font-family-mono);
 }
 
 .passwordRow {
@@ -52,16 +57,20 @@
 
 .passwordInput {
   flex: 1;
-  padding: var(--space-sm) var(--space-md);
-  border: 1px solid var(--color-border);
+  padding: var(--space-xs) var(--space-md);
+  border: 1px solid var(--color-hairline);
   border-radius: var(--radius-md);
   font-size: var(--font-size-sm);
+  color: var(--color-ink);
+  background: var(--color-canvas);
   outline: none;
   transition: border-color var(--transition-fast);
+  height: 36px;
 }
 
 .passwordInput:focus {
-  border-color: var(--color-accent);
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(204, 120, 92, 0.15);
 }
 
 .iconBtn {
@@ -70,17 +79,17 @@
   justify-content: center;
   width: 36px;
   height: 36px;
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--color-hairline);
   border-radius: var(--radius-md);
-  background: var(--color-bg);
-  color: var(--color-text-secondary);
+  background: var(--color-canvas);
+  color: var(--color-muted);
   cursor: pointer;
   transition: border-color var(--transition-fast), color var(--transition-fast);
 }
 
 .iconBtn:hover:not(:disabled) {
-  border-color: var(--color-accent);
-  color: var(--color-accent);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
 }
 
 .iconBtn:disabled {
@@ -89,18 +98,19 @@
 }
 
 .saveBtn {
-  padding: var(--space-sm) var(--space-md);
-  background: var(--color-accent);
-  color: var(--color-text-on-dark);
+  padding: var(--space-xs) var(--space-md);
+  background: var(--color-primary);
+  color: var(--color-on-primary);
   border-radius: var(--radius-md);
   font-weight: var(--font-weight-medium);
   font-size: var(--font-size-sm);
   transition: background var(--transition-fast);
   white-space: nowrap;
+  height: 36px;
 }
 
 .saveBtn:hover:not(:disabled) {
-  background: var(--color-accent-hover);
+  background: var(--color-primary-active);
 }
 
 .saveBtn:disabled {
@@ -132,15 +142,15 @@
   gap: var(--space-sm);
   margin-top: var(--space-xl);
   padding-top: var(--space-lg);
-  border-top: 1px solid var(--color-border);
-  font-weight: var(--font-weight-semibold);
-  font-size: var(--font-size-md);
-  color: var(--color-text);
+  border-top: 1px solid var(--color-hairline);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-base);
+  color: var(--color-ink);
 }
 
 .vizDescription {
-  margin-top: var(--space-sm);
+  margin-top: var(--space-xs);
   font-size: var(--font-size-sm);
-  color: var(--color-text-secondary);
+  color: var(--color-muted);
   line-height: var(--line-height-relaxed);
 }

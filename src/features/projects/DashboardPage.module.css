@@ -28,7 +28,11 @@
 }
 
 .title {
+  font-family: var(--font-family-display);
   font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-normal);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--color-ink);
 }
 
 /* Main Grid */
@@ -47,7 +51,7 @@
 
 /* Sections */
 .section {
-  background: var(--color-bg-secondary);
+  background: var(--color-surface-card);
   border-radius: var(--radius-lg);
   padding: var(--space-xl);
 }
@@ -57,17 +61,21 @@
   align-items: center;
   gap: var(--space-sm);
   margin-bottom: var(--space-lg);
-  color: var(--color-text);
+  color: var(--color-ink);
 }
 
 .sectionHeader h2 {
+  font-family: var(--font-family-display);
   font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-semibold);
+  font-weight: var(--font-weight-normal);
+  letter-spacing: var(--letter-spacing-tight);
 }
 
 .sectionTitle {
+  font-family: var(--font-family-display);
   font-size: var(--font-size-xl);
-  font-weight: var(--font-weight-semibold);
+  font-weight: var(--font-weight-normal);
+  letter-spacing: var(--letter-spacing-tight);
   margin-bottom: var(--space-lg);
 }
 
@@ -106,15 +114,15 @@
 }
 
 .status_in_progress .statusCount {
-  color: #e65100;
+  color: var(--color-accent-amber);
 }
 
 .status_review .statusCount {
-  color: #1565c0;
+  color: var(--color-accent-teal);
 }
 
 .status_completed .statusCount {
-  color: #2e7d32;
+  color: var(--color-success);
 }
 
 /* Events List */
@@ -192,13 +200,13 @@
 }
 
 .today .eventDate {
-  background: color-mix(in srgb, #1565c0 12%, transparent);
-  color: #1565c0;
-  font-weight: var(--font-weight-semibold);
+  background: rgba(93, 184, 166, 0.12);
+  color: var(--color-accent-teal);
+  font-weight: var(--font-weight-medium);
 }
 
 .today .eventTitle {
-  color: #1565c0;
+  color: var(--color-accent-teal);
 }
 
 /* Projects by Status */
@@ -233,15 +241,15 @@
 }
 
 .statusDot_in_progress {
-  background: #e65100;
+  background: var(--color-accent-amber);
 }
 
 .statusDot_review {
-  background: #1565c0;
+  background: var(--color-accent-teal);
 }
 
 .statusDot_completed {
-  background: #2e7d32;
+  background: var(--color-success);
 }
 
 .projectList {

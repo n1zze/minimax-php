@@ -13,82 +13,85 @@
   display: flex;
   align-items: center;
   gap: var(--space-lg);
-  padding: var(--space-xl);
-  background: var(--color-bg-secondary);
+  padding: var(--space-lg);
+  background: var(--color-surface-card);
   border-radius: var(--radius-lg);
-  border: 1px solid var(--color-border-light);
+  border: 1px solid var(--color-hairline-soft);
   transition: background var(--transition-fast), border-color var(--transition-fast);
   text-decoration: none;
   color: inherit;
 }
 
 .banner:hover {
-  background: var(--color-bg-dark);
-  color: var(--color-text-on-dark);
-  border-color: var(--color-bg-dark);
+  background: var(--color-surface-dark);
+  color: var(--color-on-dark);
+  border-color: var(--color-surface-dark);
+  text-decoration: none;
 }
 
 .icon {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 56px;
-  height: 56px;
-  background: var(--color-bg);
+  width: 48px;
+  height: 48px;
+  background: var(--color-canvas);
   border-radius: var(--radius-md);
   flex-shrink: 0;
   transition: background var(--transition-fast);
 }
 
 .banner:hover .icon {
-  background: rgba(255, 255, 255, 0.15);
+  background: var(--color-surface-dark-elevated);
 }
 
 .info {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: var(--space-xs);
+  gap: var(--space-xxs);
 }
 
 .title {
-  font-weight: var(--font-weight-semibold);
+  font-family: var(--font-family-display);
+  font-weight: var(--font-weight-normal);
   font-size: var(--font-size-lg);
+  letter-spacing: var(--letter-spacing-tight);
 }
 
 .hint {
   font-size: var(--font-size-sm);
-  color: var(--color-text-light);
+  color: var(--color-muted);
   transition: color var(--transition-fast);
 }
 
 .banner:hover .hint {
-  color: rgba(255, 255, 255, 0.7);
+  color: var(--color-on-dark-soft);
 }
 
 .arrow {
   font-size: var(--font-size-xl);
-  color: var(--color-text-light);
+  color: var(--color-muted-soft);
   transition: transform var(--transition-base), color var(--transition-fast);
 }
 
 .banner:hover .arrow {
   transform: translateX(4px);
-  color: var(--color-text-on-dark);
+  color: var(--color-on-dark);
 }
 
 .bannerEmpty {
   display: flex;
   align-items: center;
   gap: var(--space-lg);
-  padding: var(--space-xl);
-  background: var(--color-bg-secondary);
+  padding: var(--space-lg);
+  background: var(--color-surface-soft);
   border-radius: var(--radius-lg);
-  border: 1px dashed var(--color-border);
+  border: 1px dashed var(--color-hairline);
   color: inherit;
   opacity: 0.6;
 }
 
 .bannerEmpty .hint {
-  color: var(--color-text-light);
+  color: var(--color-muted-soft);
 }

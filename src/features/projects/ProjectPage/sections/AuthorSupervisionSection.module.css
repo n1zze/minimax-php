@@ -9,13 +9,13 @@
   display: flex;
   gap: var(--space-lg);
   padding: var(--space-lg);
-  background: var(--color-bg-secondary);
-  border-radius: var(--radius-md);
+  background: var(--color-surface-card);
+  border-radius: var(--radius-lg);
 }
 
 .entryDate {
   font-size: var(--font-size-sm);
-  color: var(--color-text-light);
+  color: var(--color-muted-soft);
   white-space: nowrap;
   min-width: 100px;
 }
@@ -23,14 +23,15 @@
 .entryInfo {
   display: flex;
   flex-direction: column;
-  gap: var(--space-xs);
+  gap: var(--space-xxs);
 }
 
 .entryTitle {
   font-weight: var(--font-weight-medium);
+  color: var(--color-ink);
 }
 
 .entryDesc {
   font-size: var(--font-size-sm);
-  color: var(--color-text-secondary);
+  color: var(--color-muted);
 }

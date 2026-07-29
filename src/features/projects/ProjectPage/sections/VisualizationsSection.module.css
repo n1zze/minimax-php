@@ -1,36 +1,34 @@
 .tabs {
   display: flex;
-  gap: var(--space-sm);
+  gap: var(--space-xs);
   margin-bottom: var(--space-xl);
   overflow-x: auto;
 }
 
 .tab {
-  padding: var(--space-sm) var(--space-lg);
+  padding: var(--space-xs) var(--space-sm);
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
-  color: var(--color-text-secondary);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-full);
+  color: var(--color-muted);
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
   white-space: nowrap;
   transition: all var(--transition-fast);
 }
 
 .tab:hover {
-  color: var(--color-text);
-  border-color: var(--color-text);
+  color: var(--color-ink);
+  border-color: var(--color-hairline);
 }
 
 .tabActive {
-  background: var(--color-accent);
-  color: var(--color-text-on-dark);
-  border-color: var(--color-accent);
+  background: var(--color-surface-card);
+  color: var(--color-ink);
+  border-color: var(--color-hairline);
 }
 
 .tabActive:hover {
-  background: var(--color-accent-hover);
-  color: var(--color-text-on-dark);
-  border-color: var(--color-accent-hover);
+  background: var(--color-surface-cream-strong);
 }
 
 .gallery {
@@ -46,40 +44,37 @@
 
 .imageWrap {
   position: relative;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-lg);
   overflow: hidden;
-  background: var(--color-bg-secondary);
+  background: var(--color-surface-soft);
   cursor: pointer;
-  /* Break inside prevents image from splitting across columns */
   break-inside: avoid;
   margin-bottom: var(--space-lg);
   transition: box-shadow var(--transition-fast);
 }
 
 .imageWrap:hover {
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--shadow-sm);
 }
 
 .image {
   width: 100%;
   height: auto;
   display: block;
-  /* Slight zoom on hover via parent transform breaks masonry — use filter instead */
   transition: filter var(--transition-fast);
 }
 
 .imageWrap:hover .image {
-  filter: brightness(0.92);
+  filter: brightness(0.95);
 }
 
-/* Room controls for designer */
 .roomControls {
   display: flex;
   align-items: center;
   gap: var(--space-lg);
   margin-bottom: var(--space-xl);
   padding: var(--space-md);
-  background: var(--color-bg-secondary);
+  background: var(--color-surface-soft);
   border-radius: var(--radius-md);
 }
 
@@ -87,19 +82,19 @@
   display: flex;
   align-items: center;
   gap: var(--space-xs);
-  padding: var(--space-sm) var(--space-md);
-  background: var(--color-accent);
-  color: var(--color-text-on-dark);
+  padding: var(--space-xs) var(--space-md);
+  background: var(--color-primary);
+  color: var(--color-on-primary);
   border: none;
   border-radius: var(--radius-md);
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
   cursor: pointer;
-  transition: all var(--transition-fast);
+  transition: background var(--transition-fast);
 }
 
 .approveBtn:hover:not(:disabled) {
-  background: var(--color-accent-hover);
+  background: var(--color-primary-active);
 }
 
 .approveBtn:disabled {
@@ -112,7 +107,7 @@
 }
 
 .tabTitle {
-  margin-right: var(--space-xs);
+  margin-right: var(--space-xxs);
 }
 
 .approvedBadge {
@@ -127,13 +122,13 @@
   justify-content: space-between;
   margin-bottom: var(--space-lg);
   padding: var(--space-sm) var(--space-md);
-  background: var(--color-bg-secondary);
+  background: var(--color-surface-soft);
   border-radius: var(--radius-md);
 }
 
 .roomLabel {
   font-size: var(--font-size-sm);
-  color: var(--color-text-secondary);
+  color: var(--color-muted);
 }
 
 .currentRoomInfo {
@@ -145,20 +140,20 @@
 .statusBadge {
   display: inline-flex;
   align-items: center;
-  padding: var(--space-xs) var(--space-sm);
-  border-radius: var(--radius-full);
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-medium);
 }
 
 .statusBadge.draft {
-  background: var(--color-warning-bg);
-  color: var(--color-warning);
+  background: var(--color-accent-amber);
+  color: var(--color-on-primary);
 }
 
 .statusBadge.approved {
-  background: var(--color-success-bg);
-  color: var(--color-success);
+  background: var(--color-success);
+  color: var(--color-on-primary);
 }
 
 .imageOverlay {
@@ -167,13 +162,13 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(20, 20, 19, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
   opacity: 0;
   transition: opacity var(--transition-fast);
-  color: white;
+  color: var(--color-on-dark);
 }
 
 .imageWrap:hover .imageOverlay {
@@ -183,19 +178,20 @@
 .empty {
   text-align: center;
   padding: var(--space-xl);
-  color: var(--color-text-secondary);
+  color: var(--color-muted);
   font-size: var(--font-size-sm);
 }
 
-/* Version History */
 .versionHistory {
   margin-bottom: var(--space-xl);
 }
 
 .versionHistoryTitle {
-  font-size: var(--font-size-md);
-  font-weight: var(--font-weight-semibold);
-  color: var(--color-text);
+  font-family: var(--font-family-display);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-normal);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--color-ink);
   margin-bottom: var(--space-md);
 }
 
@@ -207,7 +203,7 @@
 }
 
 .versionCard {
-  background: var(--color-bg-secondary);
+  background: var(--color-surface-card);
   border: 2px solid transparent;
   border-radius: var(--radius-md);
   padding: var(--space-md);
@@ -216,12 +212,12 @@
 }
 
 .versionCard:hover {
-  border-color: var(--color-border);
+  border-color: var(--color-hairline);
 }
 
 .versionCardActive {
-  border-color: var(--color-accent);
-  background: var(--color-accent-bg);
+  border-color: var(--color-primary);
+  background: rgba(204, 120, 92, 0.08);
 }
 
 .versionBadge {
@@ -229,9 +225,9 @@
   align-items: center;
   justify-content: space-between;
   font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-semibold);
-  color: var(--color-text);
-  margin-bottom: var(--space-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-ink);
+  margin-bottom: var(--space-xs);
 }
 
 .approvedIcon {
@@ -241,40 +237,40 @@
   width: 18px;
   height: 18px;
   background: var(--color-success);
-  color: white;
-  border-radius: var(--radius-full);
+  color: var(--color-on-primary);
+  border-radius: var(--radius-pill);
 }
 
 .versionMeta {
   display: flex;
   flex-direction: column;
-  gap: var(--space-xs);
-  margin-bottom: var(--space-sm);
+  gap: var(--space-xxs);
+  margin-bottom: var(--space-xs);
 }
 
 .versionMetaRow {
   display: flex;
   align-items: center;
-  gap: var(--space-xs);
+  gap: var(--space-xxs);
   font-size: var(--font-size-xs);
-  color: var(--color-text-secondary);
+  color: var(--color-muted);
 }
 
 .versionImageCount {
   font-size: var(--font-size-xs);
-  color: var(--color-text-secondary);
-  margin-bottom: var(--space-sm);
+  color: var(--color-muted);
+  margin-bottom: var(--space-xs);
 }
 
 .versionPreview {
   display: flex;
-  gap: var(--space-xs);
+  gap: var(--space-xxs);
   flex-wrap: wrap;
   min-height: 60px;
 }
 
 .versionPreview img {
-  width: calc(50% - var(--space-xs));
+  width: calc(50% - var(--space-xxs));
   height: 60px;
   object-fit: cover;
   border-radius: var(--radius-sm);

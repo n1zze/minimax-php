@@ -4,8 +4,8 @@
   left: 0;
   right: 0;
   height: var(--header-height);
-  background: var(--color-bg);
-  border-bottom: 1px solid var(--color-border);
+  background: var(--color-canvas);
+  border-bottom: 1px solid var(--color-hairline-soft);
   z-index: 100;
 }
 
@@ -22,28 +22,30 @@
 .logo {
   display: flex;
   align-items: center;
+  gap: var(--space-xs);
+}
+
+.logoMark {
+  width: 20px;
+  height: 20px;
+  color: var(--color-ink);
+}
+
+.logoText {
+  font-family: var(--font-family-display);
+  font-size: 1.25rem;
+  font-weight: var(--font-weight-normal);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--color-ink);
 }
 
 .logoImg {
-  height: 28px;
-  width: auto;
-  /* SVG through <img> can't inherit color — use CSS mask trick */
-  background: var(--color-text);
-  -webkit-mask: url('/logo.svg') no-repeat center / contain;
-  mask: url('/logo.svg') no-repeat center / contain;
-  /* Hide the actual image — mask creates the shape */
-}
-
-/* Override: we need a block element for mask to work */
-.logo {
-  display: flex;
-  align-items: center;
-}
-
-.logo .logoImg {
   display: block;
   width: 160px;
   height: 28px;
+  background: var(--color-ink);
+  -webkit-mask: url('/logo.svg') no-repeat center / contain;
+  mask: url('/logo.svg') no-repeat center / contain;
 }
 
 .nav {
@@ -52,14 +54,16 @@
 }
 
 .navLink {
-  color: var(--color-text-secondary);
+  color: var(--color-muted);
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
+  line-height: 1.4;
   transition: color var(--transition-fast);
 }
 
 .navLink:hover {
-  color: var(--color-text);
+  color: var(--color-ink);
+  text-decoration: none;
 }
 
 .userSection {
@@ -71,69 +75,69 @@
 .userInfo {
   display: flex;
   align-items: center;
-  gap: var(--space-sm);
+  gap: var(--space-xs);
 }
 
 .roleIcon {
   display: flex;
   align-items: center;
-  color: var(--color-text-light);
+  color: var(--color-muted-soft);
 }
 
 .roleLabel {
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
-  color: var(--color-text-secondary);
+  color: var(--color-muted);
 }
 
 .email {
   font-size: var(--font-size-xs);
-  color: var(--color-text-light);
+  color: var(--color-muted-soft);
 }
 
 .logoutBtn {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  height: 44px;
+  width: 36px;
+  height: 36px;
   border-radius: var(--radius-md);
-  color: var(--color-text-secondary);
+  color: var(--color-muted);
   transition: all var(--transition-fast);
 }
 
 .logoutBtn:hover {
-  background: var(--color-bg-secondary);
-  color: var(--color-text);
+  background: var(--color-surface-card);
+  color: var(--color-ink);
 }
 
+/* Claude-style coral CTA login button */
 .loginLink {
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
-  color: var(--color-accent);
-  padding: var(--space-sm) var(--space-md);
-  border: 1px solid var(--color-accent);
+  line-height: 1;
+  color: var(--color-on-primary);
+  padding: 10px 20px;
+  background: var(--color-primary);
   border-radius: var(--radius-md);
-  transition: all var(--transition-fast);
+  transition: background var(--transition-fast);
 }
 
 .loginLink:hover {
-  background: var(--color-accent);
-  color: var(--color-text-on-dark);
+  background: var(--color-primary-active);
+  text-decoration: none;
 }
 
-/* ── Mobile adaptation ──────────────────────────────────────────── */
+/* ── Mobile ── */
 @media (max-width: 640px) {
   .userSection {
     gap: var(--space-sm);
   }
 
-  /* Hide nav on mobile (logo is also a link to home) */
   .nav {
     display: none;
   }
 
-  /* Hide role label and email — keep only icon */
   .roleLabel,
   .email {
     display: none;
@@ -141,9 +145,5 @@
 
   .userInfo {
     gap: var(--space-xs);
-  }
-
-  .logo {
-    font-size: var(--font-size-base);
   }
 }

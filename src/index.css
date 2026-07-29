@@ -7,120 +7,180 @@
   box-sizing: border-box;
 }
 
-/* ===== CSS VARIABLES — LIGHT THEME (default) ===== */
+/* ===== CSS VARIABLES — CLAUDE DESIGN SYSTEM ===== */
 :root {
   color-scheme: light;
 
-  /* Colors */
-  --color-bg: #ffffff;
-  --color-bg-secondary: #f7f7f8;
-  --color-bg-dark: #1a1a1a;
-  --color-text: #1a1a1a;
-  --color-text-secondary: #6b6b6b;
-  --color-text-light: #767676;
-  --color-text-on-dark: #ffffff;
-  --color-accent: #2d2d2d;
-  --color-accent-hover: #444444;
-  --color-accent-bg: rgba(45, 45, 45, 0.1);
-  --color-border: #e5e5e5;
-  --color-border-light: #f0f0f0;
-  --color-success: #22c55e;
-  --color-success-bg: rgba(34, 197, 94, 0.1);
-  --color-warning: #f59e0b;
-  --color-warning-bg: rgba(245, 158, 11, 0.1);
-  --color-error: #ef4444;
-  --color-overlay: rgba(0, 0, 0, 0.6);
+  /* ── Surface (cream canvas system) ── */
+  --color-canvas: #faf9f5;
+  --color-surface-soft: #f5f0e8;
+  --color-surface-card: #efe9de;
+  --color-surface-cream-strong: #e8e0d2;
+  --color-surface-dark: #181715;
+  --color-surface-dark-elevated: #252320;
+  --color-surface-dark-soft: #1f1e1b;
 
-  /* Typography */
+  /* ── Brand / Accent ── */
+  --color-primary: #cc785c;
+  --color-primary-active: #a9583e;
+  --color-primary-disabled: #e6dfd8;
+  --color-accent-teal: #5db8a6;
+  --color-accent-amber: #e8a55a;
+
+  /* ── Text ── */
+  --color-ink: #141413;
+  --color-body-strong: #252523;
+  --color-body: #3d3d3a;
+  --color-muted: #6c6a64;
+  --color-muted-soft: #8e8b82;
+  --color-on-primary: #ffffff;
+  --color-on-dark: #faf9f5;
+  --color-on-dark-soft: #a09d96;
+
+  /* ── Hairline borders ── */
+  --color-hairline: #e6dfd8;
+  --color-hairline-soft: #ebe6df;
+
+  /* ── Semantic ── */
+  --color-success: #5db872;
+  --color-success-bg: rgba(93, 184, 114, 0.1);
+  --color-warning: #d4a017;
+  --color-warning-bg: rgba(212, 160, 23, 0.1);
+  --color-error: #c64545;
+  --color-error-bg: rgba(198, 69, 69, 0.1);
+  --color-overlay: rgba(20, 20, 19, 0.6);
+
+  /* ── Legacy aliases (component compatibility) ── */
+  --color-bg: var(--color-canvas);
+  --color-bg-secondary: var(--color-surface-soft);
+  --color-bg-dark: var(--color-surface-dark);
+  --color-text: var(--color-ink);
+  --color-text-secondary: var(--color-muted);
+  --color-text-light: var(--color-muted-soft);
+  --color-text-on-dark: var(--color-on-dark);
+  --color-accent: var(--color-primary);
+  --color-accent-hover: var(--color-primary-active);
+  --color-accent-bg: rgba(204, 120, 92, 0.1);
+  --color-border: var(--color-hairline);
+  --color-border-light: var(--color-hairline-soft);
+
+  /* ── Typography ── */
   --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-family-display: 'DM Serif Display', Georgia, 'Times New Roman', serif;
-  --font-size-xs: 0.75rem;
-  --font-size-sm: 0.875rem;
-  --font-size-base: 1rem;
-  --font-size-lg: 1.125rem;
-  --font-size-xl: 1.25rem;
-  --font-size-2xl: 1.5rem;
-  --font-size-3xl: 2rem;
-  --font-size-4xl: 2.5rem;
+  --font-family-display: 'Cormorant Garamond', 'EB Garamond', 'DM Serif Display', Georgia, 'Times New Roman', serif;
+  --font-family-mono: 'JetBrains Mono', 'SF Mono', 'Cascadia Code', Consolas, monospace;
+
+  --font-size-xs: 0.75rem;      /* 12px */
+  --font-size-sm: 0.875rem;     /* 14px */
+  --font-size-base: 1rem;       /* 16px */
+  --font-size-lg: 1.125rem;     /* 18px */
+  --font-size-xl: 1.375rem;     /* 22px */
+  --font-size-2xl: 1.75rem;     /* 28px */
+  --font-size-3xl: 2.25rem;     /* 36px */
+  --font-size-4xl: 3rem;        /* 48px */
+  --font-size-5xl: 4rem;        /* 64px — display-xl */
 
   --font-weight-normal: 400;
   --font-weight-medium: 500;
   --font-weight-semibold: 600;
   --font-weight-bold: 700;
 
-  --line-height-tight: 1.2;
-  --line-height-normal: 1.5;
+  --line-height-tight: 1.05;
+  --line-height-snug: 1.15;
+  --line-height-normal: 1.55;
   --line-height-relaxed: 1.7;
 
-  /* Spacing */
-  --space-xs: 0.25rem;
-  --space-sm: 0.5rem;
-  --space-md: 1rem;
-  --space-lg: 1.5rem;
-  --space-xl: 2rem;
-  --space-2xl: 3rem;
-  --space-3xl: 4rem;
-  --space-4xl: 6rem;
+  --letter-spacing-tight: -0.015em;
+  --letter-spacing-normal: 0;
+  --letter-spacing-uppercase: 0.015em;
 
-  /* Border radius */
-  --radius-sm: 4px;
+  /* ── Spacing (4px base) ── */
+  --space-xxs: 0.25rem;   /* 4px */
+  --space-xs: 0.5rem;     /* 8px */
+  --space-sm: 0.75rem;    /* 12px */
+  --space-md: 1rem;       /* 16px */
+  --space-lg: 1.5rem;     /* 24px */
+  --space-xl: 2rem;       /* 32px */
+  --space-2xl: 3rem;      /* 48px */
+  --space-section: 6rem;  /* 96px */
+
+  /* ── Border radius (hierarchical) ── */
+  --radius-xs: 4px;
+  --radius-sm: 6px;
   --radius-md: 8px;
   --radius-lg: 12px;
   --radius-xl: 16px;
-  --radius-full: 9999px;
+  --radius-pill: 9999px;
 
-  /* Shadows */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
-  --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
+  /* ── Shadows (minimal — color-block first) ── */
+  --shadow-sm: 0 1px 3px rgba(20, 20, 19, 0.08);
+  --shadow-md: 0 4px 12px rgba(20, 20, 19, 0.1);
+  --shadow-lg: 0 10px 30px rgba(20, 20, 19, 0.12);
 
-  /* Transitions */
+  /* ── Transitions ── */
   --transition-fast: 150ms ease;
   --transition-base: 250ms ease;
   --transition-slow: 400ms ease;
 
-  /* Layout */
+  /* ── Layout ── */
   --header-height: 64px;
   --content-max-width: 1200px;
   --content-padding: var(--space-xl);
 }
 
-/* ===== MOBILE: smaller paddings & font sizes ===== */
+/* ===== MOBILE ===== */
 @media (max-width: 640px) {
   :root {
     --content-padding: var(--space-md);
-    --font-size-3xl: 1.625rem;
-    --font-size-4xl: 2rem;
+    --font-size-5xl: 2rem;
+    --font-size-4xl: 1.75rem;
+    --font-size-3xl: 1.5rem;
   }
 }
 
-/* ===== DARK THEME ===== */
+/* ===== DARK THEME (product surfaces) ===== */
 :root[data-theme='dark'] {
   color-scheme: dark;
 
-  --color-bg: #0f1115;
-  --color-bg-secondary: #1a1d23;
-  --color-bg-dark: #0a0c10;
-  --color-text: #e8eaed;
-  --color-text-secondary: #a8adb5;
-  --color-text-light: #6b7280;
-  /* Text on accent buttons — accent is LIGHT in dark theme, so text must be DARK */
-  --color-text-on-dark: #0f1115;
-  --color-accent: #e8eaed;
-  --color-accent-hover: #ffffff;
-  --color-accent-bg: rgba(232, 234, 237, 0.1);
-  --color-border: #2a2d34;
-  --color-border-light: #1f222a;
-  --color-success: #4ade80;
-  --color-success-bg: rgba(74, 222, 128, 0.12);
-  --color-warning: #fbbf24;
-  --color-warning-bg: rgba(251, 191, 36, 0.12);
-  --color-error: #f87171;
-  --color-overlay: rgba(0, 0, 0, 0.75);
+  --color-canvas: #181715;
+  --color-surface-soft: #1f1e1b;
+  --color-surface-card: #252320;
+  --color-surface-cream-strong: #2d2b28;
+  --color-surface-dark: #0f0e0c;
+  --color-surface-dark-elevated: #302e2a;
+  --color-surface-dark-soft: #1a1917;
 
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
-  --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.5);
+  --color-ink: #faf9f5;
+  --color-body-strong: #e8e0d2;
+  --color-body: #c8c0b4;
+  --color-muted: #8e8b82;
+  --color-muted-soft: #6c6a64;
+  --color-on-dark: #faf9f5;
+  --color-on-dark-soft: #a09d96;
+
+  --color-hairline: #3a3835;
+  --color-hairline-soft: #2d2b28;
+
+  --color-success: #6dca82;
+  --color-warning: #e8b54a;
+  --color-error: #e05555;
+
+  /* Legacy aliases */
+  --color-bg: var(--color-canvas);
+  --color-bg-secondary: var(--color-surface-soft);
+  --color-bg-dark: var(--color-surface-dark);
+  --color-text: var(--color-ink);
+  --color-text-secondary: var(--color-muted);
+  --color-text-light: var(--color-muted-soft);
+  --color-text-on-dark: var(--color-on-dark);
+  --color-accent: var(--color-primary);
+  --color-accent-hover: var(--color-primary-active);
+  --color-accent-bg: rgba(204, 120, 92, 0.15);
+  --color-border: var(--color-hairline);
+  --color-border-light: var(--color-hairline-soft);
+
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
 /* ===== BASE STYLES ===== */
@@ -135,8 +195,8 @@ body {
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-normal);
   line-height: var(--line-height-normal);
-  color: var(--color-text);
-  background-color: var(--color-bg);
+  color: var(--color-ink);
+  background-color: var(--color-canvas);
   min-height: 100vh;
   transition: background-color var(--transition-base), color var(--transition-base);
 }
@@ -144,6 +204,13 @@ body {
 a {
   color: inherit;
   text-decoration: none;
+}
+
+a[href] {
+  color: var(--color-primary);
+}
+a[href]:hover {
+  text-decoration: underline;
 }
 
 ul, ol {
@@ -163,9 +230,9 @@ button {
   font-size: inherit;
 }
 
-/* Focus-visible: видимый фокус только для клавиатурной навигации */
+/* Focus-visible: coral ring for keyboard navigation */
 :focus-visible {
-  outline: 2px solid var(--color-accent);
+  outline: 2px solid var(--color-primary);
   outline-offset: 2px;
 }
 
@@ -174,7 +241,7 @@ a:focus-visible,
 input:focus-visible,
 textarea:focus-visible,
 select:focus-visible {
-  outline: 2px solid var(--color-accent);
+  outline: 2px solid var(--color-primary);
   outline-offset: 2px;
 }
 
@@ -183,27 +250,35 @@ input, textarea, select {
   font-size: inherit;
 }
 
-/* ===== TYPOGRAPHY ===== */
+/* ===== TYPOGRAPHY — EDITORIAL VOICE ===== */
 h1, h2, h3, h4, h5, h6 {
-  font-weight: var(--font-weight-semibold);
   line-height: var(--line-height-tight);
+  color: var(--color-ink);
 }
 
-/* Display headings use serif pair */
+/* Display headings: slab-serif (Copernicus substitute) — weight 400, negative tracking */
 h1, h2 {
   font-family: var(--font-family-display);
   font-weight: var(--font-weight-normal);
-  letter-spacing: -0.01em;
+  letter-spacing: var(--letter-spacing-tight);
 }
 
-h3, h4 {
+/* h3 stays serif for section heads */
+h3 {
+  font-family: var(--font-family-display);
+  font-weight: var(--font-weight-normal);
+  letter-spacing: -0.005em;
+}
+
+h4, h5, h6 {
   font-family: var(--font-family);
+  font-weight: var(--font-weight-medium);
 }
 
-h1 { font-size: var(--font-size-4xl); }
-h2 { font-size: var(--font-size-3xl); }
-h3 { font-size: var(--font-size-2xl); }
-h4 { font-size: var(--font-size-xl); }
+h1 { font-size: var(--font-size-4xl); line-height: 1.1; }
+h2 { font-size: var(--font-size-3xl); line-height: 1.15; }
+h3 { font-size: var(--font-size-2xl); line-height: 1.2; }
+h4 { font-size: var(--font-size-xl); line-height: 1.3; }
 
 /* ===== UTILITY CLASSES ===== */
 .container {
@@ -233,8 +308,8 @@ h4 { font-size: var(--font-size-xl); }
   display: inline-block;
   width: 20px;
   height: 20px;
-  border: 2px solid var(--color-border);
-  border-top-color: var(--color-accent);
+  border: 2px solid var(--color-hairline);
+  border-top-color: var(--color-primary);
   border-radius: 50%;
   animation: spin 0.6s linear infinite;
 }

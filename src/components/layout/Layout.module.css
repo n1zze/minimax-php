@@ -9,8 +9,8 @@
   top: -100px;
   left: var(--space-md);
   padding: var(--space-sm) var(--space-md);
-  background: var(--color-accent);
-  color: var(--color-text-on-dark);
+  background: var(--color-primary);
+  color: var(--color-on-primary);
   border-radius: var(--radius-md);
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);

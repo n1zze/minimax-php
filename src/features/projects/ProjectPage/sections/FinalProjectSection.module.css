@@ -1,28 +1,28 @@
 .swiper {
-  padding-bottom: var(--space-3xl);
+  padding-bottom: var(--space-2xl);
 }
 
 .slide {
   cursor: pointer;
   display: flex;
   flex-direction: column;
-  gap: var(--space-sm);
+  gap: var(--space-xs);
 }
 
 .image {
   width: 100%;
   height: auto;
-  border-radius: var(--radius-md);
-  background: var(--color-bg-secondary);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface-soft);
   transition: transform 0.2s ease;
 }
 
 .slide:hover .image {
-  transform: scale(1.02);
+  transform: scale(1.01);
 }
 
 .label {
   font-size: var(--font-size-sm);
-  color: var(--color-text-secondary);
+  color: var(--color-muted);
   text-align: center;
 }

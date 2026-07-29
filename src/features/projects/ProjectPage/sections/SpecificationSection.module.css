@@ -3,8 +3,8 @@
   align-items: center;
   gap: var(--space-md);
   padding: var(--space-md) var(--space-lg);
-  background: #f0f9eb;
-  border: 1px solid #b7d9a5;
+  background: var(--color-surface-card);
+  border: 1px solid var(--color-hairline-soft);
   border-radius: var(--radius-md);
   margin-bottom: var(--space-lg);
   transition: all var(--transition-fast);
@@ -13,18 +13,19 @@
 }
 
 .excelBanner:hover {
-  background: #e8f5d3;
-  border-color: #9fcf7a;
+  background: var(--color-surface-cream-strong);
+  border-color: var(--color-hairline);
+  text-decoration: none;
 }
 
 .excelIcon {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  height: 44px;
-  background: #2d7d2d;
-  color: white;
+  width: 40px;
+  height: 40px;
+  background: var(--color-accent-teal);
+  color: var(--color-on-primary);
   border-radius: var(--radius-md);
   flex-shrink: 0;
 }
@@ -37,19 +38,19 @@
 }
 
 .excelTitle {
-  font-weight: var(--font-weight-semibold);
+  font-weight: var(--font-weight-medium);
   font-size: var(--font-size-sm);
-  color: #2d7d2d;
+  color: var(--color-ink);
 }
 
 .excelHint {
   font-size: var(--font-size-xs);
-  color: #5a8f5a;
+  color: var(--color-muted);
 }
 
 .excelArrow {
   font-size: var(--font-size-xl);
-  color: #2d7d2d;
+  color: var(--color-muted-soft);
 }
 
 .table {
@@ -61,21 +62,22 @@
 .table th {
   text-align: left;
   padding: var(--space-sm) var(--space-md);
-  font-weight: var(--font-weight-semibold);
+  font-weight: var(--font-weight-medium);
   font-size: var(--font-size-xs);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--color-text-secondary);
-  border-bottom: 2px solid var(--color-border);
+  letter-spacing: var(--letter-spacing-uppercase);
+  color: var(--color-muted);
+  border-bottom: 2px solid var(--color-hairline);
 }
 
 .table td {
   padding: var(--space-md);
-  border-bottom: 1px solid var(--color-border-light);
+  border-bottom: 1px solid var(--color-hairline-soft);
+  color: var(--color-body);
 }
 
 .table tr:hover td {
-  background: var(--color-bg-secondary);
+  background: var(--color-surface-soft);
 }
 
 .qty,
@@ -85,19 +87,20 @@
 }
 
 .total {
-  font-weight: var(--font-weight-semibold);
+  font-weight: var(--font-weight-medium);
   text-align: right;
   padding-top: var(--space-md);
   font-size: var(--font-size-base);
+  color: var(--color-ink);
 }
 
 .categoryBadge {
   display: inline-block;
   font-size: var(--font-size-xs);
-  padding: 2px var(--space-sm);
-  background: var(--color-bg-secondary);
-  border-radius: var(--radius-sm);
-  color: var(--color-text-secondary);
+  padding: 3px 10px;
+  background: var(--color-surface-card);
+  border-radius: var(--radius-pill);
+  color: var(--color-muted);
 }
 
 .link {
