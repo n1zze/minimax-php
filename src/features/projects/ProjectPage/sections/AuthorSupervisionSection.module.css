@@ -1,0 +1,36 @@
+.diary {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  margin-bottom: var(--space-2xl);
+}
+
+.entry {
+  display: flex;
+  gap: var(--space-lg);
+  padding: var(--space-lg);
+  background: var(--color-bg-secondary);
+  border-radius: var(--radius-md);
+}
+
+.entryDate {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-light);
+  white-space: nowrap;
+  min-width: 100px;
+}
+
+.entryInfo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.entryTitle {
+  font-weight: var(--font-weight-medium);
+}
+
+.entryDesc {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}

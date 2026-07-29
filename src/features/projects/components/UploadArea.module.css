@@ -1,0 +1,42 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  padding: var(--space-2xl);
+  border: 2px dashed var(--color-border);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  background: var(--color-bg);
+}
+
+.area:hover {
+  border-color: var(--color-accent);
+  background: var(--color-bg-secondary);
+}
+
+.input {
+  display: none;
+}
+
+.icon {
+  color: var(--color-text-light);
+}
+
+.label {
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+}
+
+.hint {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-light);
+}

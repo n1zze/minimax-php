@@ -1,0 +1,45 @@
+# Error pages
+ErrorDocument 404 /error404.html
+ErrorDocument 500 /error500.html
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # API routes → api/index.php
+    RewriteRule ^api/(.*)$ api/index.php [L,QSA]
+
+    # SPA fallback: serve index.html for all non-file requests
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(?!api) index.html [L]
+</IfModule>
+
+# Security headers
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "DENY"
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# Deny access to sensitive files
+<FilesMatch "\.(env|db|sqlite|log|json|md)$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order Allow,Deny
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+# Cache static assets
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType text/css "access plus 1 year"
+    ExpiresByType application/javascript "access plus 1 year"
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/webp "access plus 1 year"
+    ExpiresByType image/svg+xml "access plus 1 year"
+    ExpiresByType application/pdf "access plus 1 week"
+</IfModule>

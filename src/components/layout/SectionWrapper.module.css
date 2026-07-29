@@ -1,0 +1,35 @@
+.section {
+  padding: var(--space-3xl) 0;
+}
+
+.section + .section {
+  border-top: 1px solid var(--color-border-light);
+}
+
+.container {
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  padding: 0 var(--content-padding);
+}
+
+.header {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-md);
+  margin-bottom: var(--space-xl);
+}
+
+.number {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-light);
+  font-weight: var(--font-weight-medium);
+}
+
+.title {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-semibold);
+}
+
+.content {
+  width: 100%;
+}

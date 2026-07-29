@@ -1,0 +1,8 @@
+# Защита админ-панели
+<IfModule mod_authz_core.c>
+    # Базовая HTTP-авторизация (опционально — раскомментируйте для доп. защиты)
+    # AuthType Basic
+    # AuthName "Mimimax Admin"
+    # AuthUserFile /path/to/.htpasswd
+    # Require valid-user
+</IfModule>

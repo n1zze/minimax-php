@@ -1,0 +1,88 @@
+.editor {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.table {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.headerRow {
+  display: grid;
+  grid-template-columns: 100px 1fr 120px 70px 100px 36px;
+  gap: var(--space-xs);
+  padding: var(--space-sm) var(--space-md);
+  background: var(--color-bg-secondary);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-secondary);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 100px 1fr 120px 70px 100px 36px;
+  gap: var(--space-xs);
+  padding: var(--space-xs) var(--space-md);
+  border-top: 1px solid var(--color-border-light);
+  align-items: center;
+}
+
+.cell {
+  padding: var(--space-xs) var(--space-sm);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-sm);
+  outline: none;
+}
+
+.cell:focus {
+  border-color: var(--color-accent);
+}
+
+.numCell {
+  text-align: right;
+}
+
+.numCol {
+  text-align: right;
+}
+
+.actionCol {
+  width: 36px;
+}
+
+.removeBtn {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-sm);
+  color: var(--color-text-light);
+  font-size: var(--font-size-sm);
+  transition: all var(--transition-fast);
+}
+
+.removeBtn:hover {
+  background: var(--color-error);
+  color: #fff;
+}
+
+.addBtn {
+  padding: var(--space-sm) var(--space-md);
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-md);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  transition: all var(--transition-fast);
+  align-self: flex-start;
+}
+
+.addBtn:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}

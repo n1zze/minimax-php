@@ -1,0 +1,82 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--color-overlay);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  animation: fadeIn var(--transition-fast) ease-out;
+}
+
+.dialog {
+  position: relative;
+  max-width: 90vw;
+  max-height: 90vh;
+}
+
+.image {
+  max-width: 100%;
+  max-height: 85vh;
+  border-radius: var(--radius-md);
+  object-fit: contain;
+}
+
+.closeBtn {
+  position: absolute;
+  top: -16px;
+  right: -16px;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-xl);
+  color: var(--color-text);
+  box-shadow: var(--shadow-md);
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+
+.closeBtn:hover {
+  background: var(--color-bg-secondary);
+}
+
+.navBtn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-full);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-xl);
+  color: var(--color-text);
+  box-shadow: var(--shadow-md);
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+
+.navBtn:hover {
+  background: var(--color-bg-secondary);
+}
+
+.prev {
+  left: -56px;
+}
+
+.next {
+  right: -56px;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}

@@ -1,0 +1,37 @@
+# Secrets
+config.php
+
+# Logs
+*.log
+npm-debug.log*
+
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+*.zip
+*.tar.gz
+
+# Runtime data (created automatically)
+data/mimimax.db
+data/mimimax.db-wal
+data/mimimax.db-shm
+data/ratelimit/
+uploads/*
+!uploads/.htaccess
+data/uploads/*
+!data/uploads/.htaccess
+
+# OS / Editor
+.DS_Store
+*.local
+.vscode/
+.idea/
+*.sw?
+
+# IDE / tool configs
+.mimocode/
+.kilo/
+.roo/
+.roomodes

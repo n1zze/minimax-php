@@ -1,0 +1,121 @@
+.settingsCard {
+  padding: var(--space-xl);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  margin-top: var(--space-xl);
+}
+
+.settingsTitle {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: var(--space-lg);
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-md) 0;
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.row:last-child {
+  border-bottom: none;
+}
+
+.rowLabel {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.toggle {
+  position: relative;
+  width: 44px;
+  height: 24px;
+  border: 0;
+  background: var(--color-border);
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+
+.toggleActive {
+  background: var(--color-accent);
+}
+
+.toggleKnob {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 20px;
+  height: 20px;
+  background: white;
+  border-radius: var(--radius-full);
+  transition: transform var(--transition-fast);
+}
+
+.toggleActive .toggleKnob {
+  transform: translateX(20px);
+}
+
+.sendBtn {
+  margin-top: var(--space-lg);
+  padding: var(--space-sm) var(--space-lg);
+  background: var(--color-accent);
+  color: var(--color-text-on-dark);
+  border-radius: var(--radius-md);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-sm);
+  transition: background var(--transition-fast);
+}
+
+.sendBtn:hover {
+  background: var(--color-accent-hover);
+}
+
+.sendBtn:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+
+.sendBtn:disabled:hover {
+  background: var(--color-accent);
+}
+
+.emailField {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  margin: var(--space-md) 0;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.emailInput {
+  padding: var(--space-sm) var(--space-md);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  outline: none;
+}
+
+.emailInput:focus {
+  border-color: var(--color-accent);
+}
+
+.emailInput:disabled {
+  background: var(--color-bg-secondary);
+  color: var(--color-text-light);
+}
+
+.sentMsg {
+  margin-top: var(--space-md);
+  font-size: var(--font-size-sm);
+  color: var(--color-success);
+}
+
+.errorMsg {
+  margin-top: var(--space-md);
+  font-size: var(--font-size-sm);
+  color: var(--color-error);
+}

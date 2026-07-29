@@ -1,0 +1,113 @@
+.page {
+  min-height: 100vh;
+}
+
+.container {
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  padding: 0 var(--content-padding);
+}
+
+.projectHeader {
+  padding: var(--space-3xl) 0 var(--space-xl);
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.backLink {
+  display: inline-block;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-md);
+  transition: color var(--transition-fast);
+}
+
+.backLink:hover {
+  color: var(--color-text);
+}
+
+.projectTitle {
+  font-size: var(--font-size-3xl);
+  margin-bottom: var(--space-sm);
+}
+
+.projectMeta {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-lg);
+}
+
+.progressWrap {
+  max-width: 400px;
+}
+
+.headerActions {
+  display: flex;
+  gap: var(--space-md);
+  margin-top: var(--space-lg);
+}
+
+.editBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-lg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+  transition: all var(--transition-fast);
+}
+
+.editBtn:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.exportBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-lg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+  transition: all var(--transition-fast);
+}
+
+.exportBtn:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh;
+  color: var(--color-text-secondary);
+}
+
+/* ── Mobile adaptation ──────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .projectHeader {
+    padding: var(--space-xl) 0 var(--space-lg);
+  }
+
+  .projectTitle {
+    font-size: var(--font-size-2xl);
+    word-break: break-word;
+  }
+
+  .headerActions {
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+  }
+
+  .headerActions button {
+    flex: 1;
+    justify-content: center;
+  }
+}

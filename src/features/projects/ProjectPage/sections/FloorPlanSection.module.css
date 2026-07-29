@@ -1,0 +1,32 @@
+.videoTitle {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  margin-bottom: var(--space-sm);
+  color: var(--color-text-secondary);
+}
+
+.video {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-md);
+  border: none;
+  display: block;
+}
+
+.videoPlaceholder {
+  aspect-ratio: 16 / 9;
+  background: var(--color-bg-dark);
+  color: var(--color-text-on-dark);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  transition: opacity var(--transition-fast);
+}
+
+.videoPlaceholder:hover {
+  opacity: 0.85;
+}

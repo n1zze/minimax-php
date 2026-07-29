@@ -1,0 +1,149 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--header-height);
+  background: var(--color-bg);
+  border-bottom: 1px solid var(--color-border);
+  z-index: 100;
+}
+
+.inner {
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  padding: 0 var(--content-padding);
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logoImg {
+  height: 28px;
+  width: auto;
+  /* SVG through <img> can't inherit color — use CSS mask trick */
+  background: var(--color-text);
+  -webkit-mask: url('/logo.svg') no-repeat center / contain;
+  mask: url('/logo.svg') no-repeat center / contain;
+  /* Hide the actual image — mask creates the shape */
+}
+
+/* Override: we need a block element for mask to work */
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo .logoImg {
+  display: block;
+  width: 160px;
+  height: 28px;
+}
+
+.nav {
+  display: flex;
+  gap: var(--space-lg);
+}
+
+.navLink {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  transition: color var(--transition-fast);
+}
+
+.navLink:hover {
+  color: var(--color-text);
+}
+
+.userSection {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.roleIcon {
+  display: flex;
+  align-items: center;
+  color: var(--color-text-light);
+}
+
+.roleLabel {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+}
+
+.email {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-light);
+}
+
+.logoutBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  color: var(--color-text-secondary);
+  transition: all var(--transition-fast);
+}
+
+.logoutBtn:hover {
+  background: var(--color-bg-secondary);
+  color: var(--color-text);
+}
+
+.loginLink {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-accent);
+  padding: var(--space-sm) var(--space-md);
+  border: 1px solid var(--color-accent);
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
+}
+
+.loginLink:hover {
+  background: var(--color-accent);
+  color: var(--color-text-on-dark);
+}
+
+/* ── Mobile adaptation ──────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .userSection {
+    gap: var(--space-sm);
+  }
+
+  /* Hide nav on mobile (logo is also a link to home) */
+  .nav {
+    display: none;
+  }
+
+  /* Hide role label and email — keep only icon */
+  .roleLabel,
+  .email {
+    display: none;
+  }
+
+  .userInfo {
+    gap: var(--space-xs);
+  }
+
+  .logo {
+    font-size: var(--font-size-base);
+  }
+}

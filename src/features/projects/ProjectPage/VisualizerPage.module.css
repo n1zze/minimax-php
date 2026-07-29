@@ -1,0 +1,390 @@
+.page {
+  min-height: 100vh;
+  background: var(--color-bg);
+}
+
+.container {
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  padding: 0 var(--content-padding);
+}
+
+/* ── Header ─────────────────────────────────────────────────────────────── */
+
+.header {
+  padding: var(--space-2xl) 0;
+  background: var(--color-bg-secondary);
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.backLink {
+  display: inline-block;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-md);
+  transition: color var(--transition-fast);
+}
+
+.backLink:hover {
+  color: var(--color-text);
+}
+
+.title {
+  font-size: var(--font-size-3xl);
+  margin-bottom: var(--space-sm);
+}
+
+.subtitle {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+/* ── Content ─────────────────────────────────────────────────────────────── */
+
+.content {
+  display: flex;
+  flex-direction: column;
+}
+
+.section {
+  padding: var(--space-2xl) 0;
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+/* ── Section header ──────────────────────────────────────────────────────── */
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-xl);
+}
+
+.sectionNum {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-light);
+  font-weight: var(--font-weight-medium);
+}
+
+.sectionTitle {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-semibold);
+}
+
+/* Total images badge */
+.totalBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-left: var(--space-sm);
+  padding: 3px var(--space-sm);
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  font-weight: var(--font-weight-medium);
+}
+
+/* ── Room tabs ───────────────────────────────────────────────────────────── */
+
+.roomTabs {
+  margin-bottom: var(--space-xl);
+  padding: var(--space-lg);
+  background: var(--color-bg-secondary);
+  border-radius: var(--radius-lg);
+}
+
+.roomTabsTitle {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-md);
+}
+
+.tabsList {
+  display: flex;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+}
+
+.roomTab {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-lg);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.roomTab:hover {
+  border-color: var(--color-text);
+  color: var(--color-text);
+}
+
+.roomTabActive {
+  background: var(--color-accent);
+  color: var(--color-text-on-dark);
+  border-color: var(--color-accent);
+}
+
+.roomTabCount {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  font-size: var(--font-size-xs);
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: var(--radius-full);
+  padding: 0 var(--space-xs);
+}
+
+/* ── Current tab ─────────────────────────────────────────────────────────── */
+
+.currentTabSection {
+  margin-bottom: var(--space-2xl);
+}
+
+.currentTabHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
+}
+
+.currentTabTitle {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text);
+}
+
+.imageCount {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  background: var(--color-bg-secondary);
+  padding: 2px var(--space-sm);
+  border-radius: var(--radius-full);
+}
+
+/* ── Gallery ─────────────────────────────────────────────────────────────── */
+
+.galleryGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--space-md);
+  margin-bottom: var(--space-xl);
+}
+
+.galleryItem {
+  position: relative;
+  background: var(--color-bg-secondary);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  aspect-ratio: 16/10;
+  cursor: pointer;
+}
+
+.galleryItem img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform var(--transition-base);
+}
+
+.galleryItem:hover img {
+  transform: scale(1.03);
+}
+
+/* Hover overlay with "Открыть" hint */
+.galleryOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--transition-fast);
+}
+
+.galleryItem:hover .galleryOverlay {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.galleryViewHint {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: #fff;
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+}
+
+.galleryItem:hover .galleryViewHint {
+  opacity: 1;
+}
+
+/* Source badge for designer images */
+.designerBadge {
+  position: absolute;
+  bottom: var(--space-xs);
+  left: var(--space-xs);
+  padding: 2px var(--space-xs);
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  font-size: 10px;
+  font-weight: var(--font-weight-medium);
+  border-radius: var(--radius-sm);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Delete button */
+.deleteBtn {
+  position: absolute;
+  top: var(--space-xs);
+  right: var(--space-xs);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  border-radius: var(--radius-sm);
+  opacity: 0;
+  transition: opacity var(--transition-fast), background var(--transition-fast);
+  z-index: 2;
+}
+
+.galleryItem:hover .deleteBtn {
+  opacity: 1;
+}
+
+.deleteBtn:hover {
+  background: var(--color-error, #e53e3e);
+}
+
+/* ── Room empty state ────────────────────────────────────────────────────── */
+
+.roomEmptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-3xl) 0 var(--space-xl);
+  text-align: center;
+}
+
+.roomEmptyIcon {
+  color: var(--color-text-light);
+}
+
+.roomEmptyText {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+}
+
+.roomEmptyHint {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-light);
+}
+
+/* ── No tabs empty state ─────────────────────────────────────────────────── */
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-4xl) 0;
+  text-align: center;
+}
+
+.emptyIcon {
+  color: var(--color-text-light);
+}
+
+.emptyTitle {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text);
+}
+
+.emptyText {
+  font-size: var(--font-size-base);
+  color: var(--color-text-secondary);
+  max-width: 360px;
+}
+
+/* ── Access denied / loader ──────────────────────────────────────────────── */
+
+.accessDenied {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh;
+  gap: var(--space-md);
+  text-align: center;
+}
+
+.accessDenied h2 {
+  font-size: var(--font-size-2xl);
+}
+
+.accessDenied p {
+  color: var(--color-text-secondary);
+}
+
+.loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh;
+  color: var(--color-text-secondary);
+}
+
+/* ── Mobile adaptation ──────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .header {
+    padding: var(--space-xl) 0;
+  }
+
+  .title {
+    font-size: var(--font-size-2xl);
+  }
+
+  .section {
+    padding: var(--space-xl) 0;
+  }
+
+  .sectionTitle {
+    font-size: var(--font-size-xl);
+  }
+
+  .galleryGrid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: var(--space-sm);
+  }
+
+  .currentTabHeader {
+    flex-wrap: wrap;
+  }
+
+  .roomTabs {
+    padding: var(--space-md);
+  }
+
+  /* Always show delete button on mobile (no hover) */
+  .deleteBtn {
+    opacity: 1;
+  }
+}

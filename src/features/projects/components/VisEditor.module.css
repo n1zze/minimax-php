@@ -1,0 +1,113 @@
+.editor {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.tabCard {
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+}
+
+.tabHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-md);
+}
+
+.tabTitleInput {
+  flex: 1;
+  padding: var(--space-xs) var(--space-sm);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  outline: none;
+}
+
+.tabTitleInput:focus {
+  border-color: var(--color-accent);
+}
+
+.removeTabBtn {
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-light);
+  font-size: var(--font-size-sm);
+  transition: all var(--transition-fast);
+}
+
+.removeTabBtn:hover {
+  background: var(--color-error);
+  color: #fff;
+}
+
+.imagesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+
+.addBtn {
+  padding: var(--space-sm) var(--space-md);
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-md);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  transition: all var(--transition-fast);
+  align-self: flex-start;
+}
+
+.addBtn:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+/* Status badge */
+.statusBadge {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+}
+
+.statusBadge.draft {
+  background: var(--color-warning-bg);
+  color: var(--color-warning);
+}
+
+.statusBadge.approved {
+  background: var(--color-success-bg);
+  color: var(--color-success);
+}
+
+.approvedDate {
+  margin-left: var(--space-sm);
+  font-size: var(--font-size-xs);
+  opacity: 0.8;
+}
+
+/* Approve button */
+.approveBtn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-xs) var(--space-sm);
+  background: var(--color-success);
+  color: white;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.approveBtn:hover {
+  background: #1ea34a;
+}

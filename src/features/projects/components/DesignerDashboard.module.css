@@ -1,0 +1,148 @@
+.dashboard {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-xl);
+  margin-bottom: var(--space-2xl);
+}
+
+@media (max-width: 768px) {
+  .dashboard {
+    grid-template-columns: 1fr;
+  }
+}
+
+.section {
+  background: var(--color-bg-secondary);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+}
+
+.sectionTitle {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: var(--space-lg);
+  color: var(--color-text);
+}
+
+/* Status Overview */
+.statusGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-md);
+}
+
+.statusCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--space-lg);
+  background: var(--color-bg);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+}
+
+.statusCount {
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
+  line-height: 1;
+  margin-bottom: var(--space-xs);
+}
+
+.statusLabel {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  text-align: center;
+}
+
+.status_draft .statusCount {
+  color: var(--color-text-secondary);
+}
+
+.status_in_progress .statusCount {
+  color: #e65100;
+}
+
+.status_review .statusCount {
+  color: #1565c0;
+}
+
+.status_completed .statusCount {
+  color: #2e7d32;
+}
+
+/* Events List */
+.eventsList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.eventItem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-md);
+  background: var(--color-bg);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  text-decoration: none;
+  color: inherit;
+  transition: all var(--transition-fast);
+}
+
+.eventItem:hover {
+  border-color: var(--color-accent);
+  box-shadow: var(--shadow-sm);
+}
+
+.eventDate {
+  min-width: 60px;
+  padding: var(--space-xs) var(--space-sm);
+  background: var(--color-bg-secondary);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  text-align: center;
+  color: var(--color-text-secondary);
+}
+
+.eventInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.eventProject {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-light);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.eventTitle {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text);
+}
+
+/* Event States */
+.overdue .eventDate {
+  background: #ffebee;
+  color: #c62828;
+}
+
+.overdue .eventTitle {
+  color: #c62828;
+}
+
+.today .eventDate {
+  background: #e3f2fd;
+  color: #1565c0;
+  font-weight: var(--font-weight-semibold);
+}
+
+.today .eventTitle {
+  color: #1565c0;
+}

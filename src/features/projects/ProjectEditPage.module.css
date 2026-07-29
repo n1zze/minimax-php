@@ -1,0 +1,394 @@
+.page {
+  min-height: 100vh;
+  padding-bottom: var(--space-4xl);
+}
+
+.header {
+  padding: var(--space-xl) 0;
+  border-bottom: 1px solid var(--color-border-light);
+  background: var(--color-bg-secondary);
+  position: sticky;
+  top: var(--header-height);
+  z-index: 50;
+}
+
+.container {
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  padding: 0 var(--content-padding);
+}
+
+.header .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title {
+  font-size: var(--font-size-xl);
+}
+
+.actions {
+  display: flex;
+  gap: var(--space-md);
+}
+
+.cancelBtn {
+  padding: var(--space-sm) var(--space-lg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+  transition: all var(--transition-fast);
+}
+
+.cancelBtn:hover {
+  border-color: var(--color-text);
+  color: var(--color-text);
+}
+
+.saveBtn {
+  padding: var(--space-sm) var(--space-lg);
+  background: var(--color-accent);
+  color: var(--color-text-on-dark);
+  border-radius: var(--radius-md);
+  font-weight: var(--font-weight-semibold);
+  transition: background var(--transition-fast);
+}
+
+.saveBtn:hover {
+  background: var(--color-accent-hover);
+}
+
+.deleteBtn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-sm) var(--space-lg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+  transition: all var(--transition-fast);
+}
+
+.deleteBtn:hover:not(:disabled) {
+  border-color: var(--color-error, #e53e3e);
+  color: var(--color-error, #e53e3e);
+}
+
+.deleteBtn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ── Delete confirmation modal ────────── */
+
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  padding: var(--space-lg);
+}
+
+.modal {
+  background: var(--color-bg);
+  border-radius: var(--radius-lg);
+  padding: var(--space-2xl);
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+  text-align: center;
+}
+
+.modalIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-full);
+  background: #fff5f5;
+  color: var(--color-error, #e53e3e);
+}
+
+.modalTitle {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+}
+
+.modalText {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
+.modalActions {
+  display: flex;
+  gap: var(--space-sm);
+  width: 100%;
+  margin-top: var(--space-sm);
+}
+
+.modalDeleteBtn {
+  flex: 1;
+  padding: var(--space-sm) var(--space-lg);
+  background: var(--color-error, #e53e3e);
+  color: #fff;
+  border-radius: var(--radius-md);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-sm);
+  transition: opacity var(--transition-fast);
+}
+
+.modalDeleteBtn:hover:not(:disabled) {
+  opacity: 0.85;
+}
+
+.modalDeleteBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.modalCancelBtn {
+  flex: 1;
+  padding: var(--space-sm) var(--space-lg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  transition: all var(--transition-fast);
+}
+
+.modalCancelBtn:hover:not(:disabled) {
+  border-color: var(--color-text);
+  color: var(--color-text);
+}
+
+/* ── Sections ─────────────────────────── */
+
+.section {
+  padding: var(--space-2xl) 0;
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-lg);
+}
+
+.sectionNum {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-light);
+  font-weight: var(--font-weight-medium);
+}
+
+.sectionTitle {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+}
+
+/* ── Form fields ──────────────────────── */
+
+.row {
+  display: flex;
+  gap: var(--space-lg);
+  margin-bottom: var(--space-lg);
+  align-items: flex-start;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  flex: 1;
+}
+
+.input {
+  padding: var(--space-sm) var(--space-md);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-base);
+  outline: none;
+  transition: border-color var(--transition-fast);
+  color: var(--color-text);
+  background: var(--color-bg);
+}
+
+.input:focus {
+  border-color: var(--color-accent);
+}
+
+.select {
+  padding: var(--space-sm) var(--space-md);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-base);
+  outline: none;
+  transition: border-color var(--transition-fast);
+  color: var(--color-text);
+  background: var(--color-bg);
+  cursor: pointer;
+}
+
+.select:focus {
+  border-color: var(--color-accent);
+}
+
+/* ── Thumbnail ────────────────────────── */
+
+.thumbnailRow {
+  display: flex;
+  gap: var(--space-lg);
+  align-items: flex-start;
+  margin-bottom: var(--space-xl);
+}
+
+.thumbnailInfo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.thumbnailHint {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-light);
+}
+
+/* ── Image grid ───────────────────────── */
+
+.imageGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: var(--space-md);
+  margin-bottom: var(--space-md);
+}
+
+.emptyHint {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-light);
+  font-style: italic;
+  padding: var(--space-lg) 0;
+}
+
+/* ── Excel upload ─────────────────────── */
+
+.excelUpload {
+  margin-top: var(--space-lg);
+  padding: var(--space-md);
+  background: var(--color-bg-secondary);
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.fieldLabel {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-sm);
+}
+
+.excelPreview {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.excelIcon {
+  color: #2d7d2d;
+  flex-shrink: 0;
+}
+
+.excelName {
+  flex: 1;
+  font-size: var(--font-size-sm);
+  color: var(--color-text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.excelClearBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-sm);
+  color: var(--color-text-light);
+  transition: all var(--transition-fast);
+}
+
+.excelClearBtn:hover {
+  background: var(--color-error);
+  color: white;
+}
+
+/* ── Mobile adaptation ──────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .header .container {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-md);
+  }
+
+  .title {
+    font-size: var(--font-size-base);
+    word-break: break-word;
+  }
+
+  .actions {
+    width: 100%;
+    gap: var(--space-sm);
+  }
+
+  .actions button {
+    flex: 1;
+    justify-content: center;
+  }
+
+  /* Form rows stack vertically */
+  .row {
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .thumbnailRow {
+    flex-direction: column;
+  }
+
+  .imageGrid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  }
+
+  /* Modal: full-width */
+  .modal {
+    max-width: 100%;
+    padding: var(--space-xl);
+  }
+
+  .modalActions {
+    flex-direction: column;
+  }
+}
