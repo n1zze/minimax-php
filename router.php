@@ -21,6 +21,25 @@ if (str_starts_with($path, '/api/')) {
     return;
 }
 
+// Admin panel — let PHP execute admin/*.php directly
+if (str_starts_with($path, '/admin/')) {
+    $file = __DIR__ . $path;
+    if ($path === '/admin/' || $path === '/admin') {
+        $file = __DIR__ . '/admin/index.php';
+    }
+    if (is_file($file) && pathinfo($file, PATHINFO_EXTENSION) === 'php') {
+        require $file;
+        return;
+    }
+    // Non-PHP static files in admin/
+    if (is_file($file)) {
+        return false;
+    }
+    // Default to admin/index.php
+    require __DIR__ . '/admin/index.php';
+    return;
+}
+
 // SPA fallback
 if (!str_starts_with($path, '/api/')) {
     $file = __DIR__ . $path;
