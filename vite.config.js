@@ -14,16 +14,13 @@ export default defineConfig(({ mode }) => ({
   server: {
     proxy: {
       '/api': {
-        target: 'http://localhost:3001',
+        target: 'http://localhost:8080',
         changeOrigin: true,
-        timeout: 10000,
-        retry: 0,
+        timeout: 300000,
       },
       '/uploads': {
-        target: 'http://localhost:3001',
+        target: 'http://localhost:8080',
         changeOrigin: true,
-        timeout: 10000,
-        retry: 0,
       },
     },
   },
