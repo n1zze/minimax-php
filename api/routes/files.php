@@ -184,15 +184,16 @@ function route_serve_file(string $name): void
 
     $filePath = UPLOAD_DIR . '/' . $safeName;
 
+    // Check existence first (before realpath, which fails on missing files)
+    if (!file_exists($filePath)) {
+        json_error(404, 'Файл не найден');
+    }
+
     // Double-check path stays within uploads dir
     $realUploads = realpath(UPLOAD_DIR);
     $realFile = realpath($filePath);
     if (!$realFile || !str_starts_with($realFile, $realUploads . DIRECTORY_SEPARATOR)) {
         json_error(403, 'Доступ запрещён');
-    }
-
-    if (!file_exists($filePath)) {
-        json_error(404, 'Файл не найден');
     }
 
     // Verify file belongs to a project the user can access

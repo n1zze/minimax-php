@@ -95,6 +95,8 @@ function route_visualizer_auth(string $projectId): void
         json_error(400, 'Токен обязателен');
     }
 
+    rate_limit("viz_auth:$projectId", 5, 15 * 60);
+
     $db = get_db();
     $stmt = $db->prepare('SELECT title, visualizer_token FROM projects WHERE id = ?');
     $stmt->execute([$projectId]);

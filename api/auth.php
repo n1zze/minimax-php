@@ -64,6 +64,14 @@ function require_designer(): array
  */
 function require_project_access(array $user, string $projectId): void
 {
+    // Verify project exists (prevents 500 on foreign key violations)
+    $db = get_db();
+    $stmt = $db->prepare('SELECT id FROM projects WHERE id = ?');
+    $stmt->execute([$projectId]);
+    if (!$stmt->fetch()) {
+        json_error(404, 'Проект не найден');
+    }
+
     if ($user['role'] === ROLE_DESIGNER) return;
 
     $userProjectId = $user['projectId'] ?? $user['visualizerProjectId'] ?? '';

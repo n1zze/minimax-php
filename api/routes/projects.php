@@ -56,9 +56,15 @@ function sanitize_project(array $project, string $role): array
     unset($safe['visualizerToken']);
 
     if ($role === ROLE_VISUALIZER) {
-        $safe['data'] = [
-            'floorPlan' => $project['data']['floorPlan'] ?? ['images' => [], 'videoUrl' => '', 'videoTitle' => ''],
-            'visualizations' => $project['data']['visualizations'] ?? [],
+        $safe = [
+            'id' => $safe['id'],
+            'title' => $safe['title'],
+            'data' => [
+                'floorPlan' => $project['data']['floorPlan'] ?? ['images' => [], 'videoUrl' => '', 'videoTitle' => ''],
+                'visualizations' => $project['data']['visualizations'] ?? [],
+            ],
+            'createdAt' => $safe['createdAt'],
+            'updatedAt' => $safe['updatedAt'],
         ];
     }
 
@@ -320,6 +326,22 @@ function route_create_project(): void
     $input = get_json_input();
     $db = get_db();
 
+    // Validate required fields
+    $title = trim($input['title'] ?? '');
+    if (!$title) {
+        json_error(400, 'Название проекта обязательно');
+    }
+    if (strlen($title) > 500) {
+        json_error(400, 'Название проекта слишком длинное (макс. 500 символов)');
+    }
+
+    // Validate status
+    $status = $input['status'] ?? 'draft';
+    $allowedStatuses = ['draft', 'in_progress', 'completed'];
+    if (!in_array($status, $allowedStatuses, true)) {
+        json_error(400, 'Недопустимый статус. Допустимые: ' . implode(', ', $allowedStatuses));
+    }
+
     $id = uuid();
     $projectData = array_merge($input['data'] ?? [], [
         'projectType' => $input['projectType'] ?? 'full_with_supervision',
@@ -330,9 +352,9 @@ function route_create_project(): void
     $stmt = $db->prepare('INSERT INTO projects (id, title, client_name, status, password_hash, data) VALUES (?, ?, ?, ?, ?, ?)');
     $stmt->execute([
         $id,
-        $input['title'] ?? 'Новый проект',
+        $title,
         $input['clientName'] ?? '',
-        $input['status'] ?? 'draft',
+        $status,
         !empty($input['passwordHash']) ? password_hash($input['passwordHash'], PASSWORD_BCRYPT) : '',
         json_encode($projectData, JSON_UNESCAPED_UNICODE),
     ]);
