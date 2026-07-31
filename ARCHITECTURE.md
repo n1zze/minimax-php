@@ -16,22 +16,22 @@
 │  ├── IndexedDB через idb (офлайн-кеш)                     │
 │  └── CSS Modules (стили)                                    │
 │                                                             │
-│  localhost:5173 (dev) / через Nginx (prod)                  │
+│  localhost:5173 (dev) / shared хостинг (prod)               │
 └──────────────────────────┬──────────────────────────────────┘
                            │ HTTP (JSON + FormData)
                            ▼
 ┌─────────────────────────────────────────────────────────────┐
-│                      СЕРВЕР (Express)                         │
+│                      СЕРВЕР (PHP)                             │
 │                                                             │
-│  Node.js 20 + Express 4                                     │
-│  ├── JWT авторизация (jsonwebtoken)                         │
-│  ├── bcryptjs (хеширование паролей)                         │
-│  ├── multer (загрузка файлов)                              │
-│  ├── helmet (security headers)                              │
-│  ├── express-rate-limit (защита от DDoS)                   │
-│  └── SQLite через sql.js (БД в памяти + файл)             │
+│  PHP 8.1+ (PDO, JSON, fileinfo)                            │
+│  ├── JWT авторизация (ручная реализация)                    │
+│  ├── password_hash / password_verify (bcrypt)               │
+│  ├── PDO SQLite (БД)                                       │
+│  ├── Rate limiting (файловый)                              │
+│  └── CORS / Security headers                               │
 │                                                             │
-│  localhost:3001                                              │
+│  Apache + mod_rewrite (.htaccess)                           │
+│  или php -S localhost:8080 router.php (dev)                 │
 └──────────────────────────┬──────────────────────────────────┘
                            │
                            ▼
@@ -39,7 +39,8 @@
 │                    ХРАНЕНИЕ ДАННЫХ                            │
 │                                                             │
 │  data/mimimax.db    — SQLite файл (проекты, пользователи)  │
-│  data/uploads/      — загруженные файлы (PNG, JPG, PDF)     │
+│  uploads/           — загруженные файлы (PNG, JPG, PDF)     │
+│  data/app.log       — логи приложения                       │
 └─────────────────────────────────────────────────────────────┘
 ```
 
@@ -62,21 +63,19 @@
 
 | Технология | Для чего | Где изучать |
 |---|---|---|
-| **Express.js** | HTTP-сервер, роутинг, middleware | [expressjs.com](https://expressjs.com) |
-| **JWT (jsonwebtoken)** | Авторизация по токенам | [jwt.io](https://jwt.io) |
-| **sql.js** | SQLite в Node.js (без нативных модулей) | [sql-js docs](https://sql.js.org/) |
-| **multer** | Обработка загрузки файлов | [multer docs](https://github.com/expressjs/multer) |
-| **helmet** | Безопасность HTTP-заголовков | [helmetjs.github.io](https://helmetjs.github.io) |
-| **bcryptjs** | Хеширование паролей | [bcryptjs npm](https://www.npmjs.com/package/bcryptjs) |
+| **PHP 8.1+** | Серверный язык | [php.net](https://www.php.net/manual/ru/) |
+| **PDO + SQLite** | База данных | [php.net/pdo](https://www.php.net/manual/ru/book.pdo.php) |
+| **JWT** | Авторизация по токенам | [jwt.io](https://jwt.io) |
+| **password_hash** | Хеширование паролей (bcrypt) | [php.net/password_hash](https://www.php.net/manual/ru/function.password-hash.php) |
+| **Apache .htaccess** | Rewrite rules, security headers | [httpd.apache.org](https://httpd.apache.org/docs/current/howto/htaccess.html) |
 
 ### DevOps (что знать для деплоя)
 
 | Технология | Для чего | Где изучать |
 |---|---|---|
-| **Docker** | Контейнеризация приложения | [docs.docker.com](https://docs.docker.com/get-started/) |
-| **Nginx** | Reverse proxy, SSL, раздача статики | [nginx.org](https://nginx.org/ru/docs/) |
+| **Shared хостинг** | Любой хостинг с PHP 8.1+ | — |
+| **FTP / File Manager** | Загрузка файлов на сервер | — |
 | **Let's Encrypt** | Бесплатные SSL-сертификаты | [certbot.eff.org](https://certbot.eff.org) |
-| **Linux (Ubuntu)** | Серверная ОС | [ubuntu.com/tutorials](https://ubuntu.com/tutorials) |
 
 ---
 
@@ -84,6 +83,22 @@
 
 ```
 mimimax/
+├── api/                          ← BACKEND (PHP)
+│   ├── index.php                 ← API роутер (все маршруты)
+│   ├── auth.php                  ← JWT middleware, проверка ролей
+│   ├── jwt.php                   ← Генерация/верификация JWT
+│   ├── helpers.php               ← Утилиты: логирование, JSON, CORS, БД
+│   ├── seed.php                  ← Начальные данные (первый запуск)
+│   └── routes/
+│       ├── auth.php              ← Логин, unlock, visualizer auth
+│       ├── projects.php          ← CRUD проектов
+│       ├── files.php             ← Загрузка/раздача файлов
+│       └── notifications.php     ← Уведомления
+│
+├── admin/                        ← АДМИН-ПАНЕЛЬ (PHP)
+│   ├── index.php                 ← Список проектов, управление
+│   └── backup.php                ← Скачивание бэкапа БД
+│
 ├── src/                          ← FRONTEND (React)
 │   ├── app/
 │   │   └── App.jsx              ← Главный компонент, роутинг
@@ -156,24 +171,13 @@ mimimax/
 │   │
 │   └── index.css                ← Глобальные стили + CSS-переменные + темы
 │
-├── server/                      ← BACKEND (Express)
-│   ├── index.js                 ← Точка входа, настройка Express
-│   ├── auth.js                  ← JWT: генерация, верификация, middleware
-│   ├── db.js                    ← SQLite: инициализация, миграции, сохранение
-│   ├── seed.js                  ← Начальные данные (первый запуск)
-│   └── routes/
-│       ├── auth.js              ← Логин, unlock, visualizer auth
-│       ├── projects.js          ← CRUD проектов
-│       ├── files.js             ← Загрузка/раздача файлов
-│       └── notifications.js     ← Уведомления
-│
-├── Dockerfile                   ← Сборка Docker-образа
-├── docker-compose.yml           ← Запуск в Docker
-├── nginx.conf                   ← Конфиг Nginx для production
-├── .env.example                 ← Шаблон переменных окружения
-├── .dockerignore                ← Исключения для Docker
-├── vite.config.js               ← Конфигурация Vite
-└── package.json                 ← Зависимости frontend
+├── config.example.php            ← Шаблон конфигурации
+├── config.php                    ← ВАША конфигурация (не в git)
+├── router.php                    ← Роутер для PHP dev-сервера
+├── .htaccess                     ← Apache rewrite rules
+├── index.html                    ← Точка входа SPA
+├── vite.config.js                ← Конфигурация Vite
+└── package.json                  ← Зависимости frontend
 ```
 
 ---
@@ -188,7 +192,7 @@ mimimax/
 3. UploadArea вызывает handleImageUpload в ProjectEditPage
 4. handleImageUpload:
    a) Загружает файл на сервер: POST /api/projects/:id/files (FormData)
-   b) Сервер → multer парсит файл → проверяет magic bytes → сохраняет в /uploads/
+   b) Сервер → проверяет mime type → сохраняет в /uploads/
    c) Сервер возвращает { url: '/api/files/uuid.jpg' }
    d) Frontend добавляет ?t=TOKEN к URL (для отображения в <img>)
    e) Сохраняет base64 в IndexedDB (офлайн-фолбэк)
@@ -196,7 +200,7 @@ mimimax/
 5. При нажатии "Сохранить":
    a) cleanupProjectForSave удаляет blob: URL и токены из данных
    b) API PUT /api/projects/:id отправляет sections на сервер
-   c) Сервер вызывает sectionsToFlatData → сохраняет в SQLite JSON blob
+   c) Сервер сохраняет sections как JSON в поле data таблицы projects
 ```
 
 ### Клиент открывает проект
@@ -204,7 +208,7 @@ mimimax/
 ```
 1. Клиент переходит по ссылке /projects/:id/unlock
 2. Вводит пароль → POST /api/auth/unlock/:id
-3. Сервер проверяет bcrypt hash → выдаёт JWT с ролью 'client'
+3. Сервер проверяет password_verify → выдаёт JWT с ролью 'client'
 4. Фронт сохраняет токен в localStorage
 5. Редирект на /projects/:id
 6. ProtectedRoute проверяет роль
@@ -224,7 +228,7 @@ mimimax/
 4. Нажимает "Добавить" → handleImageUpload в VisualizerPage
 5. POST /api/projects/:id/files (section: 'visualizations')
 6. PUT /api/projects/:id (sections.visualizations) — обновляет вкладку
-7. Сервер: updateProject → sectionsToFlatData → сохраняет images с uploadedBy: 'visualizer'
+7. Сервер сохраняет images с uploadedBy: 'visualizer'
 8. Сервер создаёт notification для клиента (auto-notify)
 9. Клиент при следующем входе видит колокольчик с "1"
 ```
@@ -247,7 +251,7 @@ mimimax/
 └─────────────┴────────────────────────────────────────────────────────┘
 ```
 
-Роль определяется JWT-токеном. Проверяется на сервере (middleware `authMiddleware`, `designerOnly`, `requireProjectAccess`) и на клиенте (`ProtectedRoute`, `permissions.js`).
+Роль определяется JWT-токеном. Проверяется на сервере (функции `require_auth()`, `require_designer()`, `require_project_access()`) и на клиенте (`ProtectedRoute`, `permissions.js`).
 
 ---
 
@@ -321,10 +325,7 @@ sections: {
 }
 ```
 
-В `server/routes/projects.js` → `sectionsToFlatData`:
-```js
-furniture: sections.furniture?.items?.map(item => item.serverUrl || item.src || item) || [],
-```
+В `api/routes/projects.php` — обработка поля при сохранении.
 
 ### 2. Редактор (ProjectEditPage)
 
@@ -352,9 +353,9 @@ sections.furniture?.items?.length > 0,
 
 ### 1. Сервер
 
-В `server/auth.js` — добавить константу `ROLE_NEWROLE = 'newrole'`.
+В `api/auth.php` — добавить константу `ROLE_NEWROLE = 'newrole'`.
 
-Создать endpoint авторизации (как `unlock` или `visualizerAuth`).
+Создать endpoint авторизации в `api/routes/auth.php`.
 
 ### 2. Frontend
 
@@ -371,11 +372,14 @@ sections.furniture?.items?.length > 0,
 ## Полезные команды для разработки
 
 ```bash
+# Установка зависимостей фронтенда
+npm install
+
 # Запуск frontend (dev)
 npm run dev
 
-# Запуск backend (dev, с авто-перезагрузкой)
-cd server && npm run dev
+# Запуск backend (dev)
+php -S localhost:8080 router.php
 
 # Сборка production
 npm run build
@@ -393,13 +397,13 @@ npm test
 
 | Задача | Файл(ы) |
 |---|---|
-| Добавить поле в проект | `mockProject.js`, `ProjectEditPage.jsx`, `server/routes/projects.js` |
+| Добавить поле в проект | `api/routes/projects.php`, `ProjectEditPage.jsx` |
 | Изменить цвета/шрифты | `src/index.css` |
 | Добавить страницу | `src/app/App.jsx` (роут), создать компонент в `features/` |
-| Изменить права доступа | `server/auth.js`, `src/lib/permissions.js` |
-| Добавить API-endpoint | `server/routes/`, `server/index.js`, `src/api/index.js` |
-| Изменить структуру БД | `server/db.js` (миграция), `server/routes/projects.js` |
-| Добавить уведомление | `server/routes/notifications.js` |
+| Изменить права доступа | `api/auth.php`, `src/lib/permissions.js` |
+| Добавить API-endpoint | `api/routes/`, `api/index.php`, `src/api/index.js` |
+| Изменить структуру БД | `api/helpers.php` (миграция), `api/routes/projects.php` |
+| Добавить уведомление | `api/routes/notifications.php` |
 | Стили компонента | `*.module.css` рядом с компонентом |
 
 ---
@@ -411,7 +415,6 @@ npm test
 Сервер хранит плоский JSON (`data.floorPlan`, `data.contractPdf`).
 Фронт работает с нормализованной структурой (`sections.floorPlan`, `sections.contract`).
 Преобразование: `normalizeProject()` в `useProjectStore.js`.
-Обратно: `sectionsToFlatData()` в `server/routes/projects.js`.
 
 ### 2. Token в URL для файлов
 
@@ -435,4 +438,17 @@ import styles from './MyComponent.module.css'
 
 ---
 
-*Последнее обновление: Май 2026*
+## Деплой на shared хостинг
+
+1. Выполните `npm run build` локально
+2. Скопируйте содержимое `dist/` в корень проекта
+3. Загрузите все файлы на хостинг через FTP
+4. Скопируйте `config.example.php` → `config.php` и отредактируйте
+5. Настройте права: `data/` → 755, `uploads/` → 755
+6. Убедитесь что mod_rewrite включён в Apache
+
+Подробности в README.md.
+
+---
+
+*Последнее обновление: Июль 2026*
